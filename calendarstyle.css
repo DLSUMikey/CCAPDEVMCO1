@@ -3,22 +3,30 @@ ul {list-style-type: none;}
 body {font-family: Verdana, sans-serif;}
 
 .month {
-  padding: 70px 25px;
+  padding: 10px 30px;
   width: 100%;
   background: #FFC857;
   text-align: left;
 }
 
-.month ul {
-  margin: 0;
-  padding: 0;
+.backbutton{
+  color: #2E4052;
+  font-size: 20px;
+  margin-bottom: 40px;
 }
 
-.month ul li {
+
+.monthname{
   color: #2E4052;
   font-size: 50px;
   text-transform: uppercase;
   letter-spacing: 3px;
+}
+
+.year{
+  color: #2E4052;
+  font-size: 30px;
+  margin-bottom: 10px;
 }
 
 .month .prev {
