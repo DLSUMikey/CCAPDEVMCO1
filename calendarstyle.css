@@ -53,8 +53,8 @@ table.weekdays, table.days {
 }
 
 .weekdays th {
-  background-color: #412234; /* Example background color */
-  color: #FFC857;
+  background-color: #2E4052; /* Example background color */
+  color: #FFFFFF;
 }
 
 table.days {
@@ -63,12 +63,9 @@ table.days {
   table-layout: fixed; /* Helps with equal width of columns */
 }
 
-table.days tr {
-  /* Add styles here if needed */
-}
 
 table.days td {
-  border: 3px solid #412234; /* Style for the cell borders */
+  border: 3px solid #2E4052; /* Style for the cell borders */
   color: #2E4052;
   height: 110px; /* Adjust as needed for height of each day's box */
   text-align: left; /* Aligns text to the left */
