@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Open+Sans&display=swap');
+
+
+body{
+    background-color:rgb(252, 251, 246);
+    display:flex;
+}
+
+.intro-container{
+    width:60%;
+    margin-left:20px;
+    overflow-x: hidden;
+    align-items: center;
+    justify-content: center;
+}
+
+.header1{
+    font-family: "Montserrat";
+    color:rgb(0, 0, 0);
+    font-size: 100px;
+    font-weight: bold;
+}
+
+.desc-alt{
+    font-family: "Montserrat";
+    color:rgb(50, 55, 59);
+    font-size: 18px;
+    font-weight:bold;
+}
+.desc1{
+    font-family: "Open Sans";
+    color:rgb(50, 55, 59);
+    font-size: 40px;
+    font-weight:bold;
+}
+
+.desc2{
+    font-family: "Open Sans";
+    color:rgb(50, 55, 59);
+    font-size: 22px;
+    font-weight:bold;
+}
+
+.desc3{
+    font-family: "Open Sans";
+    color:rgb(50, 55, 59);
+    font-size: 40px;
+    font-weight:bold;
+}
+
+.headersect{
+    margin-bottom:50px;
+    text-align: center;
+
+}
+
+.list{
+    margin:20px;
+
+}
+
+.descsection{
+    width: 90%;
+    margin-left:20px;
+    border-style:hidden;
+}
+
+
+.register-container{
+    margin-top: 250px;
+    width:25%;
+    margin-left:110px;
+    align-items: center;
+    justify-content: left;
+    display: flex;
+    flex-direction: column;
+    border: 5px solid;
+    border-style:outset;
+    border-radius:10px;
+    border-spacing: 50px;
+    border-color:rgb(124, 124, 124);
+    background-color:antiquewhite;
+
+}
+
+.registerbox{
+    width:100%;
+    margin-left:10px;
+    align-items: center;
+    justify-content: center;
+}
