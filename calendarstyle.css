@@ -1,0 +1,69 @@
+* {box-sizing: border-box;}
+ul {list-style-type: none;}
+body {font-family: Verdana, sans-serif;}
+
+.month {
+  padding: 70px 25px;
+  width: 100%;
+  background: #FFC857;
+  text-align: left;
+}
+
+.month ul {
+  margin: 0;
+  padding: 0;
+}
+
+.month ul li {
+  color: #2E4052;
+  font-size: 50px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+.month .prev {
+  float: left;
+  padding-top: 10px;
+}
+
+.month .next {
+  float: right;
+  padding-top: 10px;
+}
+
+table.weekdays, table.days {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+.weekdays th, .days td {
+  text-align: center;
+  padding: 5px;
+  /* Adjust the following properties as necessary to match the height of the weekday headers and day cells */
+  height: 50px;
+}
+
+.weekdays th {
+  background-color: #412234; /* Example background color */
+  color: #FFC857;
+}
+
+table.days {
+  width: 100%; /* Adjust as needed */
+  border-collapse: collapse; /* Removes space between borders */
+  table-layout: fixed; /* Helps with equal width of columns */
+}
+
+table.days tr {
+  /* Add styles here if needed */
+}
+
+table.days td {
+  border: 3px solid #412234; /* Style for the cell borders */
+  color: #2E4052;
+  height: 110px; /* Adjust as needed for height of each day's box */
+  text-align: left; /* Aligns text to the left */
+  vertical-align: top; /* Aligns text to the top */
+  padding: 5px; /* Space from text to border, adjust as needed */
+}
