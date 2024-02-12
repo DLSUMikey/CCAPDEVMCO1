@@ -1,3 +1,3 @@
 function goBackToLandingPage() {
-    window.location.href = 'landingPage.html';
+    window.location.href = 'main.html';
   }
