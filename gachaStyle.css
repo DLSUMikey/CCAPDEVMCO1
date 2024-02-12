@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+:root {
+    --border: #A7A7A7;
+    font-size: 16px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+body {
+    margin-left: 5vw;
+}
+
+.top{
+    display: flex;
+}
+
+.titleHolder {
+    margin: 0;
+    
+    width: 20%;
+    height: 5%;
+
+}
+
+.title {
+    font-weight: bold;
+    font-size: 32px;
+    color: #412234;
+}
+
+.buttonHolder {
+    margin: 0;
+    margin-left: 5vw;
+    width: 70%;
+    display: flex;
+    justify-content: space-around; 
+}
+
+.button {
+    width: 10%;
+}
+
+.buttonText {
+    font-size: 24px;
+    color: #412234;
+}
+
+.mainDiv {
+    margin: 0;
+    margin-top: 3vh;
+    height: 80vh;
+    width: 95%;
+    border: 2px var(--border);
+    border-style: solid;
+    background-color: rgb(255, 230, 176);
+    background-image: url(Banner.png);
+    background-size:contain;
+    background-repeat:no-repeat;
+    background-position-x: -10px;
+    border-radius: 5vh;
+    box-shadow: 0px 4px 10px -4px #C1ACBA;
+
+}
+
+.oneRoll {
+    width: 15vw;
+    height: 10vh;
+    display: flex;
+    justify-content: center;
+    border-radius: 5vh;
+    align-items: center;
+    font-size: 24px;
+    color: #2e4052;
+    font-weight: bold;
+    border: 2px var(--border);
+    border-style: solid;
+
+    position: relative;
+    left: 70vw;
+    top: 65vh;
+    background-color: rgb(255, 255, 255);
+}
+
+.oneRoll:hover {
+    background-color: rgb(134, 134, 134);
+}
+
+.oneRoll:active{
+    background-color: rgb(134, 134, 134);
+    color: #ffc857;
+}
+
+
+.bannerLabel {
+    display: flex;
+    border: 2px #2e4052cc;
+    border-radius: 1vh;
+    border-style: solid;
+    width: 15vw;
+    height: 10vh;
+    background-color: #2e4052cc;
+    color: #ffc857;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+    left:30vw;
+    top:55vh;
+    font-size: 24px;
+}
+
+.reward {
+    display: flex;
+    border: 2px #2e4052cc;
+    border-radius: 1vh;
+    border-style: solid;
+    width: 15vw;
+    height: 15vw;
+    color: white;
+    justify-content: center;
+    align-items: center;
+
+    position: absolute;
+    left:30vw;
+    top:55vh;
+    font-size: 24px;
+}
