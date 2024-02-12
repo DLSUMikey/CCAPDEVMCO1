@@ -10,6 +10,12 @@ body {
     margin-left: 5vw;
 }
 
+a {
+    color: #412234;
+    font-style: normal;
+    text-decoration: none;
+  }
+
 .top{
     display: flex;
 }
