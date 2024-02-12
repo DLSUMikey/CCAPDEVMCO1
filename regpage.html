@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href = "style.css">
+    <script defer src = 'reg.js'></script>
     <title>Document</title>
 </head>
 <body>
@@ -36,31 +37,23 @@
             <div class = "desc1">
                 Register:
                 <div class="desc-alt">
-                    <form id = "register" action="/">
-                        <div>
-                        <label for="regemail">DLSU email: </label>
-                        <input type="text" id="regemail" placeholder="john_williams@dlsu.edu.ph" required>
+                    <form id = "register" action="main.html">
+                        <div class = "input-control">
+                            <label for="regemail">DLSU email: </label>
+                            <input type="text" id="regemail" name="regemail"placeholder="john_williams@dlsu.edu.ph">
+                            <div class="error"></div>
                         </div>
-
-                        <br>
-
-                        <div>
+                        <div class = "input-control">
                             <label for="password1">Password: </label>
-                            <input type="password" id="password1" placeholder="35@jPassword3" required>
-                            </div>
-    
-                        <br>
-
-                        <div>
-                            <label for="password2">Password Again: </label>
-                            <input type="password" id="password2" placeholder="35@jPassword3" required>
-                            </div>
-    
-                        <br>
-                        
-                        <div>
-                            <button>Register</button>
+                            <input type="password" id="password1" name="password1" placeholder="35@jPassword3">
+                            <div class="error"></div>
                         </div>
+                        <div class = "input-control">
+                            <label for="password2">Password Again: </label>
+                            <input type="password" id="password2" name="password2" placeholder="35@jPassword3">
+                            <div class="error"></div>
+                        </div>
+                        <button type="submit">Register</button>
                     </form>
                 </div>
             </div>
@@ -68,24 +61,18 @@
                 Log-In:
             </div>
             <div class="desc-alt">
-                <form id = login action="/">
-                    <div>
-                    <label for="logemail">DLSU email: </label>
-                    <input type="text" id="logemail" placeholder="john_williams@dlsu.edu.ph" required>
+                <form id = "login" action="main.html">
+                    <div class = "input-control">
+                        <label for="logemail">DLSU email: </label>
+                        <input type="text" id="logemail" name="logemail" placeholder="john_williams@dlsu.edu.ph">
+                        <div class="error"></div>
                     </div>
-
-                    <br>
-
-                    <div>
+                    <div class = "input-control">
                         <label for="logpass">Password: </label>
-                        <input type="password" id="logpass" placeholder="john_williams@dlsu.edu.ph" required>
-                        </div>
-
-                    <br>
-
-                    <div>
-                        <button>Log-In</button>
+                        <input type="password" id="logpass" name="logpass" placeholder="john_williams@dlsu.edu.ph">
+                        <div class="error"></div>
                     </div>
+                    <button type= "submit">Log-In</button>
                 </form>
             </div>
 
