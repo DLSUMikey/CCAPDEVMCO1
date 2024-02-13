@@ -1,0 +1,141 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+:root {
+    --border: #A7A7A7;
+    font-size: 16px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+body {
+    margin-left: 5vw;
+}
+
+a {
+    color: #412234;
+    font-style: normal;
+    text-decoration: none;
+  }
+
+.top{
+    position: fixed;
+    display: flex;
+    width: 90%;
+}
+
+.titleHolder {
+    margin: 0;
+    
+    width: 20%;
+    height: 5%;
+
+}
+
+.title {
+    font-weight: bold;
+    font-size: 32px;
+    color: #412234;
+}
+
+.buttonHolder {
+    margin: 0;
+    margin-left: 8vw;
+    width: 70%;
+    display: flex;
+    justify-content: space-around; 
+}
+
+.button {
+    width: 10%;
+}
+
+.buttonText {
+    font-size: 24px;
+    color: #412234;
+}
+
+.mainHolder {
+    display: flex;
+    margin: 0;
+    margin-top: vh;
+    height: 80vh;
+    width: 200%;
+
+}
+
+.mainDiv {
+    position: fixed;
+    margin: 0;
+    margin-top: 12vh;
+    height: 80vh;
+    width: 90%;
+    
+    background-size:contain;
+    background-repeat:no-repeat;
+    background-position-x: -10px;
+    border-radius: 5vh;
+    z-index: -1;
+
+}
+
+.charHolder {
+    margin: 25vh;
+    margin-left: -3vw;
+    margin-right: 3vw;
+    width: 200%;
+    height: 70vh;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    
+}
+
+.sides {
+    
+    background-color: white;
+    width: 5vw;
+    height: 81%;
+    position: fixed;
+    z-index: 10;
+    border-style: solid;
+    display: none;
+}
+
+.sLeft{
+    margin-left: -5.1vw;
+}
+
+.sRight{
+    margin-left: 90.1vw;
+}
+
+.charBox {
+    display: inline;
+    margin-top: -5vh;
+    margin-right: 20px;
+    position: relative;
+    height: 100%;
+    width: 15%;
+    border: var(--border) 2px;
+    border-style: solid;
+    z-index: 1;
+    background-color: rgba(255, 166, 0, 0.774);
+}
+
+.purple {
+    background-color: rgba(119, 0, 255, 0.774);
+}
+
+.blue {
+    background-color: rgba(0, 17, 255, 0.774);
+}
+
+
+
+
+
+
+
+
+
+
+
