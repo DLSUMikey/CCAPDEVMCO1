@@ -115,19 +115,56 @@ a {
     font-size: 24px;
 }
 
+.gachaScreen {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #2e405286;
+    display: none;
+    
+}
+
 .reward {
+    margin: 0;
     display: flex;
     border: 2px #2e4052cc;
-    border-radius: 1vh;
+    border-radius: 35vh;
     border-style: solid;
-    width: 15vw;
-    height: 15vw;
+    width: 70vh;
+    height: 70vh;
     color: white;
     justify-content: center;
+    text-align: center;
     align-items: center;
 
     position: absolute;
-    left:30vw;
-    top:55vh;
     font-size: 24px;
+    display: none;
+    
 }
+
+.oneStar {
+    background-color: rgb(172, 172, 172);
+}
+
+.twoStar {
+    background-color: rgb(60, 202, 72);
+}
+
+.threeStar {
+    background-color: rgb(69, 60, 202);
+}
+
+.fourStar {
+    background-color: rgb(102, 42, 170);
+}
+
+.fiveStar {
+    background-color: rgb(190, 35, 48);
+}
+
