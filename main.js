@@ -1,7 +1,6 @@
 function goToCalendar() {
-  window.location.href = "../CCAPDEVMCO1/Calendar/Calendar.html";
+  window.location.href = 'Calendar/Calendar.html';
 }
-
 
 function openModal() {
   document.getElementById('profileModal').style.display = 'block';
