@@ -9,6 +9,7 @@ const backDrop = document.getElementById('modalBackDrop')
 const eventSubjectInput = document.getElementById('eventSubjectInput');
 const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
+
 function openModal(date) {
     clicked = date;
 
@@ -16,7 +17,7 @@ function openModal(date) {
 
     if (eventForDay) {
         document.getElementById('eventText').innerText = eventForDay.title;
-        document.getElementById('assignmentText').innerText = eventForDay.assignment
+        document.getElementById('taskText').innerText = eventForDay.assignment
         deleteEventModal.style.display = 'block';
     } else {
         newEventModal.style.display = 'block';
@@ -92,7 +93,7 @@ function closeModal() {
     deleteEventModal.style.display = 'none';
     backDrop.style.display = 'none';
     eventSubjectInput.value = '';
-    assignmentInput.value = '';
+    taskInput.value = '';
     clicked = null;
     load()
 }
@@ -105,7 +106,7 @@ function saveEvent() {
         events.push({
             date: clicked,
             title: eventSubjectInput.value,
-            assignment: assignmentInput.value
+            assignment: taskInput.value
         });
 
         localStorage.setItem('events', JSON.stringify(events));

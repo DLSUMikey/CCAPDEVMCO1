@@ -18,6 +18,8 @@ const accountSchema = new mongoose.Schema({
 });
 const Account = mongoose.model('Account', accountSchema);
 
+
+
 // Register Account
 app.post('/register', async (req, res) => {
     try {
