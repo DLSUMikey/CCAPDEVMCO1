@@ -121,6 +121,8 @@ function deleteEvent() {
     closeModal()
 }
 
+
+
 function initButtons() {
     document.getElementById('nextButton').addEventListener('click', () => {
         nav++;
@@ -131,12 +133,17 @@ function initButtons() {
         nav--;
         load();
     });
+    document.getElementById('returnButton').addEventListener('click', () => {
+        window.location.href = "../main.html"; 
+    });
 
     document.getElementById('saveButton').addEventListener('click', saveEvent);
     document.getElementById('cancelButton').addEventListener('click', closeModal);    
 
     document.getElementById('deleteButton').addEventListener('click', deleteEvent);
-    document.getElementById('closeButton').addEventListener('click', closeModal);    
+    document.getElementById('closeButton').addEventListener('click', closeModal);   
+    
+
 }
 
 initButtons()
