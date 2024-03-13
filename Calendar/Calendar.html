@@ -1,58 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Calendar</title>
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
 
-        <div id="container">
-            <div id="header">
-                <div id="monthDisplay"></div>
-                <div>
-                    <button id="backButton">Back</button>
-                    <button id="nextButton">Next</button>
-                </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="PlaceHolderIMG.png">
+</head>
+
+<body>
+
+    <div id="container">
+        <div id="header">
+            <div id="monthDisplay"></div>
+            <div>
+                <button id="backButton">Back</button>
+                <button id="nextButton">Next</button>
             </div>
-
-            <div id="weekdays">
-                <div>Sunday</div>
-                <div>Monday</div>
-                <div>Tuesday</div>
-                <div>Wednesday</div>
-                <div>Thursday</div>
-                <div>Friday</div>
-                <div>Saturday</div>
-            </div>
-
-            <div id="calendar"></div>
         </div>
 
-        <div id="newEventModal">
-            <h2>New Event</h2>
-
-            <input id="eventSubjectInput" placeholder="Subject" />
-            <input id="assignmentInput" placeholder="Assignment Name" />
-
-            <button id="saveButton">Save</button>
-            <button id="cancelButton">Cancel</button>
+        <div id="weekdays">
+            <div>Sunday</div>
+            <div>Monday</div>
+            <div>Tuesday</div>
+            <div>Wednesday</div>
+            <div>Thursday</div>
+            <div>Friday</div>
+            <div>Saturday</div>
         </div>
 
-        <div id="deleteEventModal">
-            <h2 id="eventText"></h2>
+        <div id="calendar"></div>
+    </div>
 
-            <p id="assignmentText"></p>
-            
-            <button id="deleteButton">Delete</button>
-            <button id="closeButton">Close</button>
-        </div>
+    <div id="newEventModal">
+        <h2>New Event</h2>
+
+        <input id="eventSubjectInput" placeholder="Subject" />
+        <input id="assignmentInput" placeholder="Assignment Name" />
+
+        <button id="saveButton">Save</button>
+        <button id="cancelButton">Cancel</button>
+    </div>
+
+    <div id="deleteEventModal">
+        <h2 id="eventText"></h2>
+
+        <p id="assignmentText"></p>
+
+        <button id="deleteButton">Delete</button>
+        <button id="closeButton">Close</button>
+    </div>
 
 
-        <div id="modalBackDrop"></div>
+    <div id="modalBackDrop"></div>
 
 
-        <script src="./script.js"></script>
-    </body>
+    <script src="./script.js"></script>
+</body>
+
 </html>
