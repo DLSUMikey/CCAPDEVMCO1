@@ -7,25 +7,48 @@
         <link href="gachaStyle.css" rel="stylesheet" type="text/css">
         <link rel="icon" href="PlaceHolderIMG.png" type="image/x-icon">
         <title>Gacha</title>
+
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+        crossorigin="anonymous">
+        </script>
         
     </head>
     <body>
+
+        <div id="profilePop">
+            <p id="username" ></p>
+            <p id="email" class="noM"></p>
+            <p id="bio" class="noM"><br>Bio: Lorem ipsum dolor sit amet</p>
+            <p id="tasks" class="noM"></p>
+            <p id="totalRolls" class="noM"></p>
+        </div>
+
+        <div class="currency" id="rolls">Rolls</div>
+        <div class="currency" id="credits">Credits</div>
         <div class="top">
             <div class="titleHolder">
                     <h1 class='title'>Gambler Goals</h1>
             </div>
             <div class="buttonHolder">
                 <div class="calendar button">
-                    <p class="buttonText"><a href="Calendar.html">Calendar</a></h2>
+                    <p class="buttonText">Main</p>
+                    <a href="main.html" class="clickable"></a>
                 </div>
                 <div class="character button">
-                    <p class="buttonText"><a href="Character.html">Characters</a></h2>
+                    <p class="buttonText">Characters</p>
+                    <a href="Character.html" class="clickable"></a>
                 </div>
                 <div class="gacha button">
-                    <p class="buttonText">Gacha</h2>
+                    <p class="buttonText">Gacha</p>
                 </div>
                 <div class="store button">
-                    <p class="buttonText"><a href="Store.html">Store</a></h2>
+                    <p class="buttonText">Store</p>
+                    <a href="Store.html" class="clickable"></a>
+                </div>
+
+                <div class="profile button" id="profile">
+                    <p class="buttonText" id="profileText"></p>
                 </div>
 
             </div>

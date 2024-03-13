@@ -20,13 +20,15 @@ a {
     position: fixed;
     display: flex;
     width: 90%;
+
+    z-index: 2;
 }
 
 .titleHolder {
     margin: 0;
-    
     width: 20%;
     height: 5%;
+
 
 }
 
@@ -38,20 +40,54 @@ a {
 
 .buttonHolder {
     margin: 0;
-    margin-left: 8vw;
-    width: 70%;
+    width: 100%;
     display: flex;
     justify-content: space-around; 
+    align-items: center;
 }
 
 .button {
-    width: 10%;
+    width: 9vw;
+    height: 6vh;
+    border: 2px #412234;
+    background-color: #412234;
+    border-style: solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3vh;
+    position: relative;
 }
 
-.buttonText {
-    font-size: 24px;
-    color: #412234;
+.button:hover {
+    border: 2px var(--border);
+    border-style: solid;
+    background-color: var(--border);
+    transition: 0.2s;
 }
+
+
+.store {
+    border: 2px var(--border);
+    border-style: solid;
+    background-color: var(--border);
+}
+
+.clickable {
+    position: absolute;
+    z-index: 3;
+    width: 100%;
+    height: 100%;
+}
+
+
+.buttonText {
+    position: absolute;
+    font-size: 24px;
+    color: white;
+    z-index: 2;
+}
+
 
 .mainHolder {
     display: flex;
@@ -155,6 +191,32 @@ a {
     background-color: rgba(0, 81, 255, 0.774);
 }
 
+.green {
+    background-color: rgba(0, 255, 55, 0.774);
+}
+
+.white {
+    background-color: rgba(126, 126, 126, 0.774);
+}
+
+.actionButton {
+    position : absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+    width: 100px;
+    height: 40px;
+    border: var(--border) solid 2px;
+    border-radius: 20px;
+    background-color: rgb(199, 10, 10);
+    color: white;  
+}
+
+.actionButton:hover{
+    transition: 0.1s;
+    background-color: rgb(230, 57, 57);
+}
+
 .lastB {
     margin-right: 5vw;
 }
@@ -194,8 +256,71 @@ a {
 }
 
 
+.currency{
+    position : fixed;
+    top:14vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+    width: 120px;
+    height: 50px;
+    border: var(--border) solid 2px;
+    border-radius: 25px;
+    background-color:#412234;
+    color: white;   
+    z-index: 5;
+}
 
+#rolls{
+    left:80vw;
+}
 
+#credits{
+    left:87.5vw;
+}
+
+#profilePop{
+    position : fixed;
+    display: none;
+    top:14vh;
+    left: 25vw;
+    justify-content: center;
+    align-items: center;    
+    width: 50vw;
+    height: 50vh;
+    border: var(--border) solid 2px;
+    border-radius: 25px;
+    background-color:#A7A7A7;
+    color: white;   
+    z-index: 20;
+}
+
+.noM {
+    margin: 1vh;
+}
+
+#username{
+    margin: 1vh;
+    font-size: 48px;
+}
+
+#email{
+    font-size: 32px;
+}
+
+.gachaScreen {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #2e405286;
+    display: none;
+    z-index: 19;
+}
 
 
 

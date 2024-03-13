@@ -18,6 +18,7 @@ a {
 
 .top{
     display: flex;
+    width: 95%;
 }
 
 .titleHolder {
@@ -36,19 +37,53 @@ a {
 
 .buttonHolder {
     margin: 0;
-    margin-left: 5vw;
-    width: 70%;
+    width: 100%;
     display: flex;
     justify-content: space-around; 
+    align-items: center;
 }
 
 .button {
-    width: 10%;
+    width: 9vw;
+    height: 6vh;
+    border: 2px #412234;
+    background-color: #412234;
+    border-style: solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3vh;
+    z-index: 1;
+    position: relative;
 }
 
+.button:hover {
+    border: 2px var(--border);
+    border-style: solid;
+    background-color: var(--border);
+    transition: 0.2s;
+}
+
+
+.gacha {
+    border: 2px var(--border);
+    border-style: solid;
+    background-color: var(--border);
+}
+
+.clickable {
+    position: absolute;
+    z-index: 3;
+    width: 100%;
+    height: 100%;
+}
+
+
 .buttonText {
+    position: absolute;
     font-size: 24px;
-    color: #412234;
+    color: white;
+    z-index: 2;
 }
 
 .mainDiv {
@@ -115,20 +150,6 @@ a {
     font-size: 24px;
 }
 
-.gachaScreen {
-    display: flex;
-    height: 100%;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-color: #2e405286;
-    display: none;
-    
-}
-
 .reward {
     margin: 0;
     display: flex;
@@ -168,3 +189,70 @@ a {
     background-color: rgb(190, 35, 48);
 }
 
+
+.currency{
+    position : fixed;
+    top:14vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+    width: 120px;
+    height: 50px;
+    border: var(--border) solid 2px;
+    border-radius: 25px;
+    background-color:#412234;
+    color: white;   
+    z-index: 5;
+}
+
+#rolls{
+    left:80vw;
+}
+
+#credits{
+    left:87.5vw;
+}
+
+
+#profilePop{
+    position : fixed;
+    display: none;
+    top:14vh;
+    left: 25vw;
+    justify-content: center;
+    align-items: center;    
+    width: 50vw;
+    height: 50vh;
+    border: var(--border) solid 2px;
+    border-radius: 25px;
+    background-color:#A7A7A7;
+    color: white;   
+    z-index: 5;
+}
+
+.noM {
+    margin: 1vh;
+}
+
+#username{
+    margin: 1vh;
+    font-size: 48px;
+}
+
+#email{
+    font-size: 32px;
+}
+
+.gachaScreen {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #2e405286;
+    display: none;
+    
+}
