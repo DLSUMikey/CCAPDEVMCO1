@@ -1,3 +1,3 @@
 function goToCalendar() {
-    window.location.href = 'calendar.html';
+    window.location.href = "../CCAPDEVMCO1/Calendar/Calendar.html";
   }
