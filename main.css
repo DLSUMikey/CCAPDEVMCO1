@@ -108,7 +108,7 @@ header {
     color: #fff;
 }
 
-main.table {
+/* main.table {
     position: absolute;
     left: 100;
     top: 90px;
@@ -120,7 +120,7 @@ main.table {
     box-shadow: 0 .4rem .8rem #0005;
     border-radius: .8rem;
     
-}
+} */
 
 .table-header {
     height: 10%;
@@ -165,11 +165,6 @@ tbody tr:nth-child(even) {
     background-color:#ffc8576F;
 }
 
-tbody tr:hover {
-    background-color: #FCFBF67F;
-    color: #284052;
-    font-weight: 500;
-}
 
 .status {
     padding: .4rem 0;
@@ -262,7 +257,35 @@ main.table-below table {
     border-radius: 5px;
     cursor: pointer;
     color: #FCFBF6;
+    text-align: center;
 }
+
+.button_container {
+    margin-top: 20px;
+    color: white;
+    cursor: pointer;
+    width: 100%;
+
+}
+
+.btn {
+    background-color: #58394b; 
+    border: solid 3px #412234;
+    color: white;
+    cursor: pointer;
+    width: 100%;
+    
+}
+
+.add_new {
+    text-align: center;
+}
+
+.btn:hover {
+    background-color: #58394b; /* Same as default background color */
+    border: solid 3px #412234; /* Same as default border color */
+}
+
 
 .plus-button {
     width: 30px;
@@ -332,3 +355,4 @@ main.table-below table {
 .done-button {
     wid
 } */
+
