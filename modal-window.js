@@ -23,3 +23,9 @@ window.onclick = function (event) {
         closeAbout();
     }
 }
+
+function handleLogin() {
+    //putting login validation here
+
+    window.location.href = 'main.html';
+}
