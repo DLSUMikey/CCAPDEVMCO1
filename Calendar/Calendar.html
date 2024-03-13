@@ -1,90 +1,57 @@
 <!DOCTYPE html>
-<html>
-<head>
-<title>Calendar</title> 
-<link rel="stylesheet" href="calendarstyle.css">
-<script src="calendar.js"></script>
-</head>
-<body>
-  <div class="month">      
-    <a href="javascript:void(0);" class="backbutton" onclick="goBackToLandingPage()">&#10094; Back</a>
-    <div class="monthname">February</div>
-    <div class="year">2024</div>
-  </div>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Calendar</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
 
-  <table class="weekdays">
-    <tr>
-      <th>MONDAY</th>
-      <th>TUESDAY</th>
-      <th>WEDNESDAY</th>
-      <th>THURSDAY</th>
-      <th>FRIDAY</th>
-      <th>SATURDAY</th>
-      <th>SUNDAY</th>
-    </tr>
-  </table>
+        <div id="container">
+            <div id="header">
+                <div id="monthDisplay"></div>
+                <div>
+                    <button id="backButton">Back</button>
+                    <button id="nextButton">Next</button>
+                </div>
+            </div>
 
-  <table class="days">
-    <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td>1</td>
-      <td>2</td>
-      <td>3</td>
-    </tr>
-    <tr>
-      <td>4</td>
-      <td>5</td>
-      <td>6</td>
-      <td>7</td>
-      <td>8</td>
-      <td>9</td>
-      <td>10</td>
-    </tr>
-    <tr>
-      <td>11</td>
-      <td>
-        <span class="currentdate">12</span>
-        <div class="assignment complete">MCO1 Project Deadline</div>
-      </td>
-      <td>13</td>
-      <td>14</td>
-      <td>15</td>
-      <td>16</td>
-      <td>17</td>
-    </tr>
-    <tr>
-      <td>18</td>
-      <td>19</td>
-      <td>20</td>
-      <td>21</td>
-      <td>22</td>
-      <td>23</td>
-      <td>24</td>
-    </tr>
-    <tr>
-      <td>25</td>
-      <td>
-        26
-        <div class="assignment not-started">Mini Challenge 2</div>
-      </td>
-      <td>
-        27
-        <div class="assignment in-progress">MCO2 Project Deadline</div>
-      </td>
-      <td>
-        28
-        <div class="assignment not-started">Mini Challenge 3</div>
-      </td>
-      <td>
-        29
-        <div class="assignment in-progress">MCO3 Project Deadline</div>
-      </td>
-    </tr>
-  </table>
-  
+            <div id="weekdays">
+                <div>Sunday</div>
+                <div>Monday</div>
+                <div>Tuesday</div>
+                <div>Wednesday</div>
+                <div>Thursday</div>
+                <div>Friday</div>
+                <div>Saturday</div>
+            </div>
 
-</body>
+            <div id="calendar"></div>
+        </div>
+
+        <div id="newEventModal">
+            <h2>New Event</h2>
+
+            <input id="eventTitleInput" placeholder="Event Title" />
+
+            <button id="saveButton">Save</button>
+            <button id="cancelButton">Cancel</button>
+        </div>
+
+        <div id="deleteEventModal">
+            <h2>Event</h2>
+
+            <p id="eventText"></p>
+            
+            <button id="deleteButton">Delete</button>
+            <button id="closeButton">Close</button>
+        </div>
+
+
+        <div id="modalBackDrop"></div>
+
+
+        <script src="./script.js"></script>
+    </body>
 </html>
