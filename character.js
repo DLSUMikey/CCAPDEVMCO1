@@ -237,6 +237,7 @@ window.onload = async function() {
             $(".owned").css("display", "none")
             switched = false
             profileLink = "FindAcc.html"//change to Profile.html
+            loadItems()//IMPORTANT
             updateCurrency()
         } else {
             console.log("Error")

@@ -199,6 +199,10 @@ a {
     background-color: rgba(126, 126, 126, 0.774);
 }
 
+.owned{
+    display: none;
+}
+
 .actionButton {
     position : absolute;
     display: flex;
