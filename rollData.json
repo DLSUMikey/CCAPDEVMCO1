@@ -1,5 +1,9 @@
-{
-  "fiveStarPity": 8,
-  "fourStarPity": 4,
-  "userID": "testID"
-}
+[
+  {
+    "fiveStarPity": 0,
+    "fourStarPity": 0,
+    "userID": "1"
+  }
+]
+
+

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Practice mini challenge">
+        <link href="CharacterStyle.css" rel="stylesheet" type="text/css">
+        <link rel="icon" href="FindStyle.css" type="image/x-icon">
+        <title>Gacha</title>
+
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+        crossorigin="anonymous">
+        </script>
+        
+    </head>
+    <body>
+        <p id="userDisplay"></p>
+        <div class="information">
+
+            <div class="login">
+                <h2>Log-in</h2>
+                <form id="findAcc">
+                    <label for="logUser" class="userNameLabel" class="accLabel">Username</label><!-- logUser (important) -->
+                    <input type="text", id="logUser" class="accInput">
+                    <label for="logPass" class="passWordLabel" class="accLabel">Password</label><!-- logPass (important) -->
+                    <input type="text", id="logPass" class="accInput">
+                </form>
+                <div classs="errorDiv">
+                    <p id="errorDisplayLog"></p>
+                </div>   
+                <button type="login" id="login">Log in</button>
+            </div>
+
+            <div class="register">
+                <h2>Register</h2>
+                <form id="findAcc">
+                    <label for="username" class="userNameLabel" class="accLabel">Username</label>
+                    <input type="text", id="username" class="accInput">
+                    <label for="password" class="passWordLabel" class="accLabel">Password</label>
+                    <input type="text", id="password" class="accInput">
+                    <label for="repeatPass" class="repeatPassLabel" class="accLabel">Confirm Password</label>
+                    <input type="text", id="repeatPass" class="accInput">
+                </form>
+                <div classs="errorDiv">
+                    <p id="errorDisplayReg"></p>
+                </div>    
+                <button type="submit" id="submit">Register</button>
+            </div>
+
+            
+        
+        </div>
+        <script src="findAcc.js"></script>
+    </body>
+    
+</html>
+
