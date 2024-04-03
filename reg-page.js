@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(data => {
                 alert(data);
                 if (data === 'User created successfully') {
-                    window.location.href = 'main.html';
+                    window.location.href = 'landingpage.html';
                 }
             })
             .catch((error) => {

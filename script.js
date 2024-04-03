@@ -1,38 +1,36 @@
 let nav = 0;
-let clicked = null;
-let objectId = localStorage.getItem('currentUserID')
+let userID = localStorage.getItem('currentUserID'); // Change from objectId to userID
 const backDrop = document.getElementById('modalBackDrop');
-
 const calendar = document.getElementById('calendar');
 const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-const readData = async () => {
-    let rollDataR = await fetch('http://localhost:3000/tasks/getUser/' + objectId)
-    let rollData = await rollDataR.json();
-    return rollData;
-}
-
 function formatDateToISO(day, month, year) {
-    // Ensure month and day are two digits, for example, '04' instead of '4'
     const formattedMonth = month < 10 ? '0' + month : month.toString();
     const formattedDay = day < 10 ? '0' + day : day.toString();
-
-    // Format to match ISO date format 'YYYY-MM-DD'
     return `${year}-${formattedMonth}-${formattedDay}`;
 }
 
-async function load(){
+async function readData() {
+    try {
+        let rollDataR = await fetch('http://localhost:3000/tasks/getUser/' + userID); // Change from objectId to userID
+        let rollData = await rollDataR.json();
+        return rollData;
+    } catch (error) {
+        console.error("Error fetching tasks:", error);
+        return null;
+    }
+}
+
+async function load() {
     const dt = new Date();
-    let eventForDay = await readData()
+    const eventForDay = await readData();
 
     if (nav !== 0) {
         dt.setMonth(new Date().getMonth() + nav);
     }
 
-    const day = dt.getDate();
-    const month = dt.getMonth();
     const year = dt.getFullYear();
-
+    const month = dt.getMonth();
     const firstDayOfMonth = new Date(year, month, 1);
     const daysInMonth = new Date(year, month + 1, 0).getDate();
 
@@ -44,51 +42,45 @@ async function load(){
     });
     const paddingDays = weekdays.indexOf(dateString.split(', ')[0]);
 
-    document.getElementById('monthDisplay').innerText = 
+    document.getElementById('monthDisplay').innerText =
         `${dt.toLocaleDateString('en-us', { month: 'long' })} ${year}`;
 
     calendar.innerHTML = '';
 
-    for(let i = 1; i <= paddingDays + daysInMonth; i++) {
+    for (let i = 1; i <= paddingDays + daysInMonth; i++) {
         const daySquare = document.createElement('div');
         daySquare.classList.add('day');
 
-        const dayString = `${month + 1}/${i - paddingDays}/${year}`
-
         if (i > paddingDays) {
-            daySquare.innerText = i - paddingDays
-            const [month, day, year] = dayString.split('/'); 
-            const isoDayString = formatDateToISO(day, month, year);
+            const day = i - paddingDays;
+            const isoDayString = formatDateToISO(day, month + 1, year);
 
-            if (eventForDay != null) {
-                for (let i = 0; i < eventForDay.length; i++) {
-                    if (eventForDay[i].taskDateGiven.split('T')[0] === isoDayString) {
-                        console.log(eventForDay)
-                        console.log(eventForDay[i].taskName)
+            daySquare.innerText = day;
+
+            if (eventForDay) {
+                for (const event of eventForDay) {
+                    const eventDate = new Date(event.taskDateDue); // Assuming taskDateDue is the correct field for due date
+                    const eventDay = eventDate.getDate();
+                    const eventMonth = eventDate.getMonth();
+                    const eventYear = eventDate.getFullYear();
+
+                    if (eventDay === day && eventMonth === month && eventYear === year) {
                         const eventDiv = document.createElement('div');
                         eventDiv.classList.add('event');
-                        eventDiv.innerText = eventForDay[i].taskName;
+                        eventDiv.innerText = event.taskName;
                         daySquare.appendChild(eventDiv);
                     }
-                    
                 }
             }
-
-            if (i - paddingDays === day && nav === 0) {
-                daySquare.id = 'currentDay';
-            }
-
         } else {
-            daySquare.classList.add('padding')
+            daySquare.classList.add('padding');
         }
 
-        calendar.appendChild(daySquare)
-
+        calendar.appendChild(daySquare);
     }
-
-    
-    console.log(paddingDays)
 }
+
+
 
 
 function initButtons() {
@@ -101,10 +93,11 @@ function initButtons() {
         nav--;
         load();
     });
+
     document.getElementById('returnButton').addEventListener('click', () => {
-        window.location.href = "../main.html"; 
+        window.location.href = "../main.html";
     });
 }
 
-initButtons()
-load()
+initButtons();
+load();

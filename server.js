@@ -39,7 +39,7 @@ app.post('/register', async (req, res) => {
     } catch (err) {
         res.status(500).send('Server error');
         console.log("Error: ", err);
-    } s
+    }
 });
 
 app.post('/login', async (req, res) => {
@@ -62,7 +62,7 @@ app.post('/login', async (req, res) => {
 app.post('/createTask', async (req, res) => {
     try {
         const { userID, taskName, taskDesc, taskDateDue } = req.body;
-
+        console.log("Task data received from frontend:", req.body);
         const newTask = new Task({
             userID,
             taskName,
@@ -78,6 +78,14 @@ app.post('/createTask', async (req, res) => {
     }
 });
 
+
+app.use(express.static(path.join(__dirname, 'public'), {
+    setHeaders: (res, path, stat) => {
+        if (path.endsWith('.css')) {
+            res.setHeader('Content-Type', 'text/css');
+        }
+    }
+}));
 
 // Update task endpoint
 app.put('/updateTask/:taskID', async (req, res) => {
@@ -124,6 +132,33 @@ app.get('/getTasks', async (req, res) => {
     } catch (err) {
         console.error("Error fetching tasks: ", err);
         res.status(500).send('Server error');
+    }
+});
+
+app.get('/tasks/getUser/:userID', async (req, res) => {
+    try {
+        const userID = req.params.userID;
+        const tasks = await Task.find({ userID });
+        res.json(tasks);
+    } catch (err) {
+        console.error("Error fetching tasks by user ID: ", err);
+        res.status(500).json({ error: 'Server error' });
+    }
+});
+
+app.get('/getUserData/:userID', async (req, res) => {
+    try {
+        const userID = req.params.userID;
+        const userData = await UserData.findById(userID);
+
+        if (!userData) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        res.json(userData);
+    } catch (err) {
+        console.error("Error fetching user data:", err);
+        res.status(500).json({ error: 'Server error' });
     }
 });
 

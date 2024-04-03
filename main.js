@@ -14,9 +14,30 @@ function goToStore() {
   window.location.href = 'Store.html';
 }
 
-function openModal() {
-  document.getElementById('profileModal').style.display = 'block';
+async function openModal() {
+  try {
+    let userID = localStorage.getItem('currentUserID');
+    // Fetch user data from the database
+    const response = await fetch(`/getUserData/${userID}`); // Assuming you have an endpoint to retrieve user data
+    if (!response.ok) {
+      throw new Error('Failed to fetch user data');
+    }
+    const userData = await response.json();
+
+    // Populate profile information in the modal
+    document.getElementById("username").innerText = userData.userName;
+    document.getElementById("email").innerText = userData.email;
+    document.getElementById("date").innerText = userData.dateCreated;
+    document.getElementById("tasksCompleted").innerText = userData.TotalTasksCompleted;
+    document.getElementById("coins").innerText = userData.credits;
+
+    // Display the modal
+    document.getElementById("profileModal").style.display = "block";
+  } catch (err) {
+    console.error("Error fetching user data:", err);
+  }
 }
+
 
 function closeModal() {
   document.getElementById('profileModal').style.display = 'none';
@@ -71,6 +92,8 @@ let createNewTask = () => {
     taskDateDue: dateInput.value
   };
 
+
+  console.log("Task data sent to backend:", taskData);
   fetch('http://localhost:3000/createTask', {
     method: 'POST',
     headers: {

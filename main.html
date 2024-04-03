@@ -20,10 +20,9 @@
             <button class="store-btn" onclick="goToStore()">Store</button>
         </nav>
         <div class="profile">
-            <button class="profile-btn">Profile</button>
+            <button id="profileBtn" class="profile-btn" onclick="openModal()">Profile</button>
         </div>
     </header>
-
     <!-- <main class="table">
             <section class="table-header">
                 <h1>To-Do's</h1>
@@ -148,7 +147,26 @@
             </table>
         </section>
     </main>
+
+    <div id="profileModalContainer"></div>
+    <!-- Profile Modal -->
+    <div id="profileModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <p><strong>Username:</strong> <span id="username"></span></p>
+            <p><strong>Email:</strong> <span id="email"></span></p>
+            <p><strong>Bio:</strong> <span id="bio"></span></p>
+            <p><strong>Date Created:</strong> <span id="date"></span></p>
+            <p><strong>Tasks Completed:</strong> <span id="tasksCompleted"></span></p>
+            <p><strong>Coins:</strong> <span id="coins"></span></p>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script defer src="main.js"></script>
+
+
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
