@@ -13,6 +13,7 @@ function goToGacha() {
 function goToStore() {
   window.location.href = 'Store.html';
 }
+
 function openModal() {
   document.getElementById('profileModal').style.display = 'block';
 }
@@ -20,197 +21,176 @@ function openModal() {
 function closeModal() {
   document.getElementById('profileModal').style.display = 'none';
 }
+
 window.onclick = function (event) {
   let modal = document.getElementById('profileModal');
   if (event.target == modal) {
     closeModal();
   }
-}
-
-// function goToCalendar() {
-//     window.location.href = 'calendar.html';
-//   }
-
-// const myModal = document.getElementById('myModal')
-// const myInput = document.getElementById('myInput')
-
-// myModal.show()
-
-// myModal.addEventListener('shown.bs.modal', () => {
-//   myInput.focus()
-// })
+};
 
 let form = document.getElementById("form");
-let textInput = document.getElementById("textInput");
-let dateInput = document.getElementById("dateInput");
-let textArea = document.getElementById("textArea");
-let msg = document.getElementById("msg");
-let tasks = document.getElementById("tasks");
-let add = document.getElementById("add");
-
-form.addEventListener('submit', (e)=> {
+form.addEventListener('submit', (e) => {
   e.preventDefault();
   formValidation();
-})
+});
 
-let formValidation = ()=> {
-  if(textInput.value === "") {
-    console.log('failure');
+let formValidation = () => {
+  let textInput = document.getElementById("textInput");
+  let dateInput = document.getElementById("dateInput");
+  let textArea = document.getElementById("textArea");
+  let msg = document.getElementById("msg");
+
+  if (textInput.value === "") {
     msg.innerHTML = "Task cannot be blank!";
   }
   else if (dateInput.value === "") {
     msg.innerHTML = "Due Date cannot be blank!";
   }
   else {
-    console.log('success')
     msg.innerHTML = "";
-    acceptevents();
-    add.setAttribute("events-bs-dismiss", "modal");
-    add.click();
-    (()=>{
-      add.setAttribute("events-bs-dismiss", "");
-    })()
+    let taskID = form.getAttribute("data-task-id");
+    if (taskID) {
+      updateTask(taskID);
+    } else {
+      createNewTask();
+    }
   }
 };
 
-let events = localStorage.getItem('events') ? JSON.parse(localStorage.getItem('events')) : [];
+let createNewTask = () => {
+  let userID = localStorage.getItem('currentUserID');
+  let textInput = document.getElementById("textInput");
+  let dateInput = document.getElementById("dateInput");
+  let textArea = document.getElementById("textArea");
 
-let acceptevents = () => {
-  const status = "not started"; // Set the initial status of the new task
-  events.push({
-    date: dateInput.value,
-    title: textInput.value,
-    assignment: textArea.value,
-    status: status
-  });
-  localStorage.setItem("events", JSON.stringify(events));
-  console.log(events);
-  createTasks();
+  const taskData = {
+    userID: userID,
+    taskName: textInput.value,
+    taskDesc: textArea.value,
+    taskDateDue: dateInput.value
+  };
+
+  fetch('http://localhost:3000/createTask', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(taskData),
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json(); // Parse the JSON response
+    })
+    .then(data => {
+      alert(data.message); // Display the message from JSON response
+      displayTasks();
+      resetForm();
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('An error occurred while creating the task');
+    });
 };
 
-let createTasks = () => {
-  tasks.innerHTML = "";
-  events.map((x, y) => {
-    let statusClass = "";
-    let statusText = "";
-    switch (x.status) {
-      case "not started":
-        statusClass = "not-started";
-        statusText = "Not Started";
-        break;
-      case "in progress":
-        statusClass = "in-progress";
-        statusText = "In Progress";
-        break;
-      case "complete":
-        statusClass = "complete";
-        statusText = "Complete";
-        break;
-    }
-    return (tasks.innerHTML += `
-  <div id="${y}">
-    <span class="fw-bold">${x.title}</span>
-    <span class="small text-secondary">${x.date}</span>
-    <p>${x.assignment}</p>
-    <select class="form-select status-select mb-3">
-      <option value="not started">Not Started</option>
-      <option value="in progress">In Progress</option>
-      <option value="complete">Complete</option>
-    </select>
-    <span class="options">
-      <i onClick= "editTask(this)" data-bs-toggle="modal" data-bs-target="#form" class="fas fa-edit"></i>
-      <i onClick ="deleteTask(this);createTasks()" class="fas fa-trash-alt"></i>
-    </span>
-  </div>
-`);
-  });
-  resetForm();
+
+let updateTask = (taskID) => {
+  // Add logic to update an existing task
+  let textInput = document.getElementById("textInput");
+  let dateInput = document.getElementById("dateInput");
+  let textArea = document.getElementById("textArea");
+
+  const taskData = {
+    taskName: textInput.value,
+    taskDesc: textArea.value,
+    taskDateDue: dateInput.value
+  };
+
+  fetch(`http://localhost:3000/updateTask/${taskID}`, {
+    method: 'PUT', // Use PUT for update
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(taskData),
+  })
+    .then(response => response.text())
+    .then(data => {
+      alert(data);
+      displayTasks();
+      resetForm();
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+      alert('An error occurred while updating the task');
+    });
 };
 
-let deleteTask = (e)=> {
-  e.parentElement.remove();
-  events.splice(e.parentElement, 1);
-  localStorage.setItem("events", JSON.stringify(events));
-  console.log(events);
+let deleteTask = (taskID) => {
+  // Send a request to delete the task
+  fetch(`http://localhost:3000/deleteTask/${taskID}`, {
+    method: 'DELETE',
+  })
+    .then(response => response.text())
+    .then(data => {
+      alert(data);
+      displayTasks();
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+      alert('An error occurred while deleting the task');
+    });
+};
+
+let editTask = (taskID) => {
+  // Retrieve task data and populate the form for editing
+  fetch(`http://localhost:3000/getTask/${taskID}`)
+    .then(response => response.json())
+    .then(taskData => {
+      document.getElementById("textInput").value = taskData.taskName;
+      document.getElementById("dateInput").value = taskData.taskDateDue;
+      document.getElementById("textArea").value = taskData.taskDesc;
+      form.setAttribute("data-task-id", taskID);
+      openModal();
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+      alert('An error occurred while fetching task data');
+    });
 };
 
 let resetForm = () => {
-  textInput.value = "";
-  dateInput.value = "";
-  textArea.value = "";
-};
-
-let editTask = (e) => {
-  let selectedTask = e.parentElement;
-  let index = Array.from(tasks.children).indexOf(selectedTask);
-
-  // Set the values of the input fields to the current values of the task object
-  textInput.value = events[index].title;
-  dateInput.value = events[index].date;
-  textArea.value = events[index].assignment;
-  document.querySelector("#statusSelect").value = events[index].status;
-
-  // Show the modal
-  let modal = new bootstrap.Modal(document.getElementById("formModal"));
-  modal.show();
-
-  // Update the task when the form is submitted
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    events[index].title = textInput.value;
-    events[index].date = dateInput.value;
-    events[index].assignment = textArea.value;
-    events[index].status = document.querySelector("#statusSelect").value;
-    localStorage.setItem("events", JSON.stringify(events));
-    createTasks();
-    //resetForm();
-  });
+  document.getElementById("textInput").value = "";
+  document.getElementById("dateInput").value = "";
+  document.getElementById("textArea").value = "";
+  form.removeAttribute("data-task-id");
 };
 
 
-// let editTask = (e) => {
-//   let selectedTask = e.parentElement;
+let displayTasks = () => {
+  let userID = localStorage.getItem('currentUserID');
+  let tasksContainer = document.getElementById("tasks");
+  tasksContainer.innerHTML = ''; // Clear existing tasks
 
-//   textInput.value = selectedTask.children[0].innerHTML;
-//   dateInput.value = selectedTask.children[1].innerHTML;
-//   textarea.value = selectedTask.children[2].innerHTML;
+  fetch(`http://localhost:3000/getTasks?userID=${userID}`)
+    .then(response => response.json())
+    .then(tasks => {
+      tasks.forEach(task => {
+        tasksContainer.innerHTML += `
+          <div id="task-${task._id}">
+            <h3>${task.taskName}</h3>
+            <p>${task.taskDesc}</p>
+            <span>Due: ${new Date(task.taskDateDue).toLocaleDateString()}</span>
+            <button onclick="editTask('${task._id}')">Edit</button>
+            <button onclick="deleteTask('${task._id}')">Delete</button>
+          </div>
+        `;
+      });
+    })
+    .catch(error => {
+      console.error('Error fetching tasks:', error);
+    });
+};
 
-//   deleteTask(e);
-// };
-
-// let editTask = (e) => {
-//   let selectedTask = e.parentElement;
-//   let index = Array.from(tasks.children).indexOf(selectedTask);
-
-//   // Set the values of the input fields to the current values of the task object
-//   textInput.value = events[index].title;
-//   dateInput.value = events[index].date;
-//   textArea.value = events[index].assignment;
-//   document.querySelector("#statusSelect").value = events[index].status;
-
-//   // Remove the current task card
-//   deleteTask(e);
-
-//   // Show the modal
-//   let modal = new bootstrap.Modal(document.getElementById("formModal"));
-//   modal.show();
-
-//   // Add a new task when the form is submitted
-//   form.addEventListener('submit', (e) => {
-//     e.preventDefault();
-//     events.splice(index, 1, {
-//       date: dateInput.value,
-//       title: textInput.value,
-//       assignment: textArea.value,
-//       status: document.querySelector("#statusSelect").value
-//     });
-//     localStorage.setItem("events", JSON.stringify(events));
-//     createTasks();
-//     resetForm();
-//   });
-// };
-
-(()=> {
-  events = JSON.parse(localStorage.getItem("events")) || [];
-  createTasks();
-})();
+displayTasks();

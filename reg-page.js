@@ -21,7 +21,11 @@ document.addEventListener('DOMContentLoaded', function () {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ email, username, password, confirmPassword }),
+            body: JSON.stringify({
+                email,
+                userName: username,  // Changed to match server.js
+                userPassword: password // Changed to match server.js
+            }),
         })
             .then(response => response.text())
             .then(data => {

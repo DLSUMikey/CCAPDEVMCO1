@@ -2,60 +2,136 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const cors = require('cors');
+const path = require('path');
+
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-mongoose.connect('mongodb+srv://gorillamonkey193:w753WrjUP7Nlcdkk@ccapdevmco.3w1lh3c.mongodb.net/');
-
-// Account Schema
-const accountSchema = new mongoose.Schema({
-    email: { type: String, required: true, unique: true },
-    username: { type: String, required: true, unique: true },
-    password: { type: String, required: true }
-});
-const Account = mongoose.model('Account', accountSchema);
+app.use(express.static(__dirname));
 
 
+mongoose.connect('mongodb+srv://vraiz:123@ccapdevmco.3w1lh3c.mongodb.net');
 
+// Import the userData schema
+const UserData = require('./userData'); // Assuming the file is named userData.js and is in the same directory
+const Task = require('./tasks');
+const Items = require('./inventory');
 // Register Account
 app.post('/register', async (req, res) => {
     try {
-        const { email, username, password, confirmPassword } = req.body;
+        const { userName, userPassword, email } = req.body;
 
-        // Validate that passwords match
-        if (password !== confirmPassword) {
-            return res.status(400).send('Passwords do not match');
+        // Check if user exists
+        let user = await UserData.findOne({ userName });
+        if (user) {
+            return res.status(400).send('Username already exists');
         }
 
-        // Check if account exists
-        let account = await Account.findOne({ $or: [{ email }, { username }] });
-        if (account) {
-            return res.status(400).send('User already exists');
-        }
-
-        // Hash password and create account
-        const hashedPassword = await bcrypt.hash(password, 10);
-        account = new Account({ email, username, password: hashedPassword });
-        await account.save();
-        console.log("New user registered: ", account);
+        // Hash password and create user
+        const hashedPassword = await bcrypt.hash(userPassword, 10);
+        user = new UserData({ userName, userPassword: hashedPassword, email });
+        await user.save();
+        console.log("New user registered: ", user);
         res.status(201).send('User created successfully');
     } catch (err) {
         res.status(500).send('Server error');
         console.log("Error: ", err);
+    } s
+});
+
+app.post('/login', async (req, res) => {
+    const { email, userPassword } = req.body;
+
+    try {
+        let user = await UserData.findOne({ email });  // Changed from userName to email
+        if (user && await bcrypt.compare(userPassword, user.userPassword)) {
+            res.json({ success: true, userID: user._id }); // Send success status and userID
+        } else {
+            res.json({ success: false });
+        }
+    } catch (err) {
+        res.status(500).send('Server error');
     }
 });
 
-app.post('/login', (req, res) => {
-    const { email, password } = req.body;
 
-    if (email && password) {
-        res.send('Login successful');
-    } else {
-        res.status(400).send('Invalid email or password');
+
+app.post('/createTask', async (req, res) => {
+    try {
+        const { userID, taskName, taskDesc, taskDateDue } = req.body;
+
+        const newTask = new Task({
+            userID,
+            taskName,
+            taskDesc,
+            taskDateDue
+        });
+
+        await newTask.save();
+        res.status(201).json({ message: 'Task created successfully' }); // Correctly formatted JSON response
+    } catch (err) {
+        console.error("Error creating task: ", err);
+        res.status(500).json({ error: 'Server error' }); // Correctly formatted JSON response
     }
+});
+
+
+// Update task endpoint
+app.put('/updateTask/:taskID', async (req, res) => {
+    const { taskID } = req.params;
+    const { taskName, taskDesc, taskDateDue } = req.body;
+
+    try {
+        await Task.findByIdAndUpdate(taskID, {
+            taskName,
+            taskDesc,
+            taskDateDue
+        });
+        res.send('Task updated successfully');
+    } catch (err) {
+        console.error("Error updating task: ", err);
+        res.status(500).send('Server error');
+    }
+});
+
+// Delete task endpoint
+app.delete('/deleteTask/:taskID', async (req, res) => {
+    const { taskID } = req.params;
+
+    try {
+        await Task.findByIdAndDelete(taskID);
+        res.send('Task deleted successfully');
+    } catch (err) {
+        console.error("Error deleting task: ", err);
+        res.status(500).send('Server error');
+    }
+});
+
+
+
+app.get('/getTasks', async (req, res) => {
+    try {
+        const userID = req.query.userID;
+        if (!userID) {
+            return res.status(400).send('User ID is required');
+        }
+
+        const tasks = await Task.find({ userID });
+        res.json(tasks);
+    } catch (err) {
+        console.error("Error fetching tasks: ", err);
+        res.status(500).send('Server error');
+    }
+});
+
+
+
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'landingpage.html'));
 });
 
 const PORT = process.env.PORT || 3000;
