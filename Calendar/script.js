@@ -1,34 +1,18 @@
 let nav = 0;
 let clicked = null;
-let events = localStorage.getItem('events') ? JSON.parse(localStorage.getItem('events')) : [];
 
 const calendar = document.getElementById('calendar');
-const newEventModal = document.getElementById('newEventModal');
-const deleteEventModal = document.getElementById('deleteEventModal');
-const backDrop = document.getElementById('modalBackDrop')
-const eventSubjectInput = document.getElementById('eventSubjectInput');
-const taskInput = document.getElementById('taskInput');
 const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-
-function openModal(date) {
-    clicked = date;
-
-    const eventForDay = events.find(e => e.date === clicked);
-
-    if (eventForDay) {
-        document.getElementById('eventText').innerText = eventForDay.title;
-        document.getElementById('taskText').innerText = eventForDay.assignment
-        deleteEventModal.style.display = 'block';
-    } else {
-        newEventModal.style.display = 'block';
-    }
-
-    backDrop.style.display = 'block';
+const readData = async () => {
+    let rollDataR = await fetch('http://localhost:3000/tasks/getUser')
+    let rollData = await rollDataR.json();
+    return rollData;
 }
 
-function load(){
+async function load(){
     const dt = new Date();
+    let eventForDay = await readData()
 
     if (nav !== 0) {
         dt.setMonth(new Date().getMonth() + nav);
@@ -62,18 +46,21 @@ function load(){
 
         if (i > paddingDays) {
             daySquare.innerText = i - paddingDays
-            const eventForDay = events.find(e => e.date === dayString);
+
+            for (let i = 0; i < eventForDay.length; i++) {
+                if (eventForDay[i].taskDateGiven == dayString) {
+                    eventDiv.classList.add('event');
+                    eventDiv.innerText = eventForDay.taskName;
+                    daySquare.appendChild(eventDiv);
+                }
+                
+            }
 
             if (i - paddingDays === day && nav === 0) {
                 daySquare.id = 'currentDay';
             }
 
-            if (eventForDay) {
-                const eventDiv = document.createElement('div');
-                eventDiv.classList.add('event');
-                eventDiv.innerText = eventForDay.title;
-                daySquare.appendChild(eventDiv);
-            }
+
 
             daySquare.addEventListener('click', () => openModal(dayString));
         } else {
@@ -87,42 +74,6 @@ function load(){
     
     console.log(paddingDays)
 }
-
-function closeModal() {
-    eventSubjectInput.classList.remove('error')
-    newEventModal.style.display = 'none';
-    deleteEventModal.style.display = 'none';
-    backDrop.style.display = 'none';
-    eventSubjectInput.value = '';
-    taskInput.value = '';
-    clicked = null;
-    load()
-}
-
-function saveEvent() {
-    eventSubjectInput.classList.remove('error')
-    if (eventSubjectInput.value) {
-        eventSubjectInput.classList.remove('error')
-
-        events.push({
-            date: clicked,
-            title: eventSubjectInput.value,
-            assignment: taskInput.value
-        });
-
-        localStorage.setItem('events', JSON.stringify(events));
-        closeModal()
-    } else {
-        eventSubjectInput.classList.add('error')
-    }
-}
-
-function deleteEvent() {
-    events = events.filter(e => e.date !== clicked);
-    localStorage.setItem('events', JSON.stringify(events))
-    closeModal()
-}
-
 
 
 function initButtons() {
@@ -138,14 +89,6 @@ function initButtons() {
     document.getElementById('returnButton').addEventListener('click', () => {
         window.location.href = "../main.html"; 
     });
-
-    document.getElementById('saveButton').addEventListener('click', saveEvent);
-    document.getElementById('cancelButton').addEventListener('click', closeModal);    
-
-    document.getElementById('deleteButton').addEventListener('click', deleteEvent);
-    document.getElementById('closeButton').addEventListener('click', closeModal);   
-    
-
 }
 
 initButtons()
