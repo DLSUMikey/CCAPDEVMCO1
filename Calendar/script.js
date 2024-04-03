@@ -1,13 +1,24 @@
 let nav = 0;
 let clicked = null;
+let objectId = localStorage.getItem('currentUserID')
+const backDrop = document.getElementById('modalBackDrop');
 
 const calendar = document.getElementById('calendar');
 const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 const readData = async () => {
-    let rollDataR = await fetch('http://localhost:3000/tasks/getUser')
+    let rollDataR = await fetch('http://localhost:3000/tasks/getUser/' + objectId)
     let rollData = await rollDataR.json();
     return rollData;
+}
+
+function formatDateToISO(day, month, year) {
+    // Ensure month and day are two digits, for example, '04' instead of '4'
+    const formattedMonth = month < 10 ? '0' + month : month.toString();
+    const formattedDay = day < 10 ? '0' + day : day.toString();
+
+    // Format to match ISO date format 'YYYY-MM-DD'
+    return `${year}-${formattedMonth}-${formattedDay}`;
 }
 
 async function load(){
@@ -46,23 +57,27 @@ async function load(){
 
         if (i > paddingDays) {
             daySquare.innerText = i - paddingDays
+            const [month, day, year] = dayString.split('/'); 
+            const isoDayString = formatDateToISO(day, month, year);
 
-            for (let i = 0; i < eventForDay.length; i++) {
-                if (eventForDay[i].taskDateGiven == dayString) {
-                    eventDiv.classList.add('event');
-                    eventDiv.innerText = eventForDay.taskName;
-                    daySquare.appendChild(eventDiv);
+            if (eventForDay != null) {
+                for (let i = 0; i < eventForDay.length; i++) {
+                    if (eventForDay[i].taskDateGiven.split('T')[0] === isoDayString) {
+                        console.log(eventForDay)
+                        console.log(eventForDay[i].taskName)
+                        const eventDiv = document.createElement('div');
+                        eventDiv.classList.add('event');
+                        eventDiv.innerText = eventForDay[i].taskName;
+                        daySquare.appendChild(eventDiv);
+                    }
+                    
                 }
-                
             }
 
             if (i - paddingDays === day && nav === 0) {
                 daySquare.id = 'currentDay';
             }
 
-
-
-            daySquare.addEventListener('click', () => openModal(dayString));
         } else {
             daySquare.classList.add('padding')
         }
