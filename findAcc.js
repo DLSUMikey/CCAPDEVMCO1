@@ -64,14 +64,12 @@ async function login(username = String, password = String) {
             }else{
                 return {
                     "_id": "-2",
-                    "userID": -2
                 }
             }
         }
     }
     return {
         "_id": "-1",
-        "userID": -1
     }
 }
 
@@ -93,7 +91,6 @@ submit.addEventListener("click", async (e) =>{
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        "userID": taken,
                         "userName": username.value,
                         "userPassword": password.value
                     })
@@ -130,14 +127,14 @@ loginButton.addEventListener("click", async (e) =>{
         errorlog.textContent = "don't leave fields empty"
     } else {
         userData = await login(logUser.value, logPass.value)
-        if (userData != null && userData.userID > -1){
+        if (userData != null && userData._id != "-1"){
             localStorage.setItem('currentUserID', userData._id)
             errorlog.textContent = "success"
             window.location.href = mainPage
         } else {
-            if(userData.userID == -1){
+            if(userData._id == "-1"){
                 errorlog.textContent = "user not found"
-            }else if(userData.userID == -2){
+            }else if(userData._id == "-2"){
                 errorlog.textContent = "wrong password"
             }else{
                 errorlog.textContent = "error"
@@ -148,7 +145,7 @@ loginButton.addEventListener("click", async (e) =>{
 })
 
 window.onload = function() {
-    //localStorage.clear() -- for testing
+    localStorage.clear()
     userID = localStorage.getItem("currentUserID")
     if (userID != null) {
         window.location.href = mainPage

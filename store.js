@@ -66,6 +66,7 @@ async function loadProfile(){
     let userData = await readData()
     $("#profilePop").css("display", "block")
     $("#rewardScreen").css("display", "flex")
+    $("#rewardScreen").css("position", "fixed")
     $("#username").text(userData.userName)
     
     
@@ -76,6 +77,8 @@ async function loadProfile(){
     }
     $("#tasks").text("Tasks completed: " + userData.TotalTasksCompleted)
     $("#totalRolls").text("Total Rolls: " + userData.TotalRolls)
+    $("#5Pity").text("5 star pity: " + userData.fiveStarPity)
+    $("#4Pity").text("4 star pity: " + userData.fourStarPity)
 }
 
 rewardScreen.addEventListener('click', (e) =>{
