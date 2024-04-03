@@ -55,20 +55,11 @@ $("#charHolder").on('click', ".actionButton", async function() {
                 "credits" : UserData.credits - price,
                 "Rolls" : UserData.Rolls + reward
             })
-        }).then(updateCurrency())
+        }).then(updateCurrency)
     }else{
         $(element).text("Insufficent Credits")
     }
-
-
-    
-
-    
 })
-
-
-
-
 
 //bring up
 async function loadProfile(){
@@ -96,7 +87,6 @@ rewardScreen.addEventListener('click', (e) =>{
 //copy over
 profile.addEventListener('click', (e) =>{
     if(loggedIN == false){
-        localStorage.clear()//remove this
         window.location.href = profileLink
     }else {
         loadProfile()

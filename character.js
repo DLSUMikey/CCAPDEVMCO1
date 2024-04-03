@@ -217,7 +217,6 @@ rewardScreen.addEventListener('click', (e) =>{
 //copy over
 profile.addEventListener('click', (e) =>{
     if(loggedIN == false){
-        localStorage.clear()//remove this
         window.location.href = profileLink
     }else {
         loadProfile()
