@@ -6,13 +6,13 @@ var loggedIN //Copy over//New~!
 
 
 const readData = async () => {
-    let rollDataR = await fetch('http://localhost:3000/userdatas/' + userID)
+    let rollDataR = await fetch('https://raipi.onrender.com/userdatas/' + userID)
     let rollData = await rollDataR.json();
     return rollData;
 };
 
 const readItemDatas = async () => {
-    let itemDataR = await fetch('http://localhost:3000/items');
+    let itemDataR = await fetch('https://raipi.onrender.com/items');
     let itemData = await itemDataR.json();
     return itemData;
 }
@@ -46,7 +46,7 @@ $("#charHolder").on('click', ".actionButton", async function() {
     
 
     if(UserData.credits > price){
-        fetch(('http://localhost:3000/userdatas/' + userID), {
+        fetch(('https://raipi.onrender.com/userdatas/' + userID), {
             method: "PATCH",
             headers: {
                 'Content-Type': 'application/json'

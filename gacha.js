@@ -23,7 +23,7 @@ var loggedIN;
 
 async function readItemDatas() {
     try {
-        let itemDataR = await fetch('http://localhost:3000/items');
+        let itemDataR = await fetch('https://raipi.onrender.com/items');
         if (!itemDataR.ok) {
             throw new Error('Failed to fetch item data');
         }
@@ -50,7 +50,7 @@ function getItemIndex(itemDatas) {
 
 async function readData(userID) {
     try {
-        let rollDataR = await fetch(`http://localhost:3000/userdatas/${userID}`);
+        let rollDataR = await fetch(`https://raipi.onrender.com/userdatas/${userID}`);
         if (!rollDataR.ok) {
             throw new Error('Failed to fetch user data');
         }
