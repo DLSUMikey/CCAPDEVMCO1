@@ -71,9 +71,9 @@ let formValidation = () => {
   } else {
     msg.innerHTML = "";
     if (currentTaskID) {
-      updateTask(currentTaskID);
+      updateTask(); // Update existing task if currentTaskID exists
     } else {
-      createNewTask();
+      createNewTask(); // Create new task if currentTaskID is null
     }
   }
 };
@@ -115,7 +115,7 @@ let createNewTask = () => {
     });
 };
 
-let updateTask = (taskID) => {
+let updateTask = () => {
   let textInput = document.getElementById("textInput");
   let dateInput = document.getElementById("dateInput");
   let textArea = document.getElementById("textArea");
@@ -126,7 +126,7 @@ let updateTask = (taskID) => {
     taskDateDue: dateInput.value
   };
 
-  fetch(`http://localhost:3000/updateTask/${taskID}`, {
+  fetch(`http://localhost:3000/updateTask/${currentTaskID}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -207,6 +207,8 @@ function editTask(taskID) {
       document.getElementById("textInput").value = taskData.taskName;
       document.getElementById("dateInput").value = dateDue;
       document.getElementById("textArea").value = taskData.taskDesc;
+      // Set the currentTaskID to the taskID for updating
+      currentTaskID = taskID;
       showModal();
     })
     .catch(error => {
@@ -285,4 +287,3 @@ function displayTasks() {
       console.error('Error fetching tasks:', error);
     });
 }
-

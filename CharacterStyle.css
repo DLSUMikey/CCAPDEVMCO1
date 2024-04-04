@@ -14,9 +14,9 @@ a {
     color: #412234;
     font-style: normal;
     text-decoration: none;
-  }
+}
 
-.top{
+.top {
     position: fixed;
     display: flex;
     width: 90%;
@@ -26,7 +26,7 @@ a {
 
 .titleHolder {
     margin: 0;
-    
+
     width: 20%;
     height: 5%;
 
@@ -42,7 +42,7 @@ a {
     margin: 0;
     width: 100%;
     display: flex;
-    justify-content: space-around; 
+    justify-content: space-around;
     align-items: center;
 }
 
@@ -116,9 +116,9 @@ a {
     border: 2px var(--border);
     border-style: solid;
     background-color: rgb(255, 230, 176);
-    
-    background-size:contain;
-    background-repeat:no-repeat;
+
+    background-size: contain;
+    background-repeat: no-repeat;
     background-position-x: -10px;
     border-radius: 5vh;
     box-shadow: 0px 4px 10px -4px #C1ACBA;
@@ -144,7 +144,7 @@ a {
 }
 
 .sides {
-    
+
     background-color: white;
     width: 5vw;
     height: 81%;
@@ -153,11 +153,11 @@ a {
 
 }
 
-.sLeft{
+.sLeft {
     margin-left: -5.1vw;
 }
 
-.sRight{
+.sRight {
     margin-left: 90.4vw;
 }
 
@@ -179,7 +179,7 @@ a {
     width: 25vw;
 }
 
-.orange{
+.orange {
     background-color: rgba(255, 166, 0, 0.774);
 }
 
@@ -199,70 +199,70 @@ a {
     background-color: rgba(126, 126, 126, 0.774);
 }
 
-.owned{
+.owned {
     display: none;
 }
 
 .actionButton {
-    position : absolute;
+    position: absolute;
     display: flex;
     justify-content: center;
-    align-items: center;    
+    align-items: center;
     width: 100px;
     height: 40px;
     border: var(--border) solid 2px;
     border-radius: 20px;
     background-color: rgb(199, 10, 10);
-    color: white;  
+    color: white;
 }
 
-.actionButton:hover{
+.actionButton:hover {
     transition: 0.1s;
     background-color: rgb(230, 57, 57);
 }
 
-.switch{
-    position : fixed;
-    left:6vw;
-    top:14vh;
+.switch {
+    position: fixed;
+    left: 6vw;
+    top: 14vh;
     display: flex;
     justify-content: center;
-    align-items: center;    
+    align-items: center;
     width: 120px;
     height: 50px;
     border: var(--border) solid 2px;
     border-radius: 25px;
-    background-color:#412234;
-    color: white; 
+    background-color: #412234;
+    color: white;
     z-index: 5;
 }
 
-.switch:hover{
+.switch:hover {
     transition: 0.1s;
-    background-color:#A7A7A7;
+    background-color: #A7A7A7;
 }
 
-.currency{
-    position : fixed;
-    top:14vh;
+.currency {
+    position: fixed;
+    top: 14vh;
     display: flex;
     justify-content: center;
-    align-items: center;    
+    align-items: center;
     width: 120px;
     height: 50px;
     border: var(--border) solid 2px;
     border-radius: 25px;
-    background-color:#412234;
-    color: white;   
+    background-color: #412234;
+    color: white;
     z-index: 5;
 }
 
-#rolls{
-    left:80vw;
+#rolls {
+    left: 80vw;
 }
 
-#credits{
-    left:87.5vw;
+#credits {
+    left: 87.5vw;
 }
 
 
@@ -281,7 +281,7 @@ a {
     background-position: center;
 }
 
-.CharName{
+.CharName {
     font-size: 24px;
 }
 
@@ -298,32 +298,44 @@ a {
 }
 
 
-#profilePop{
-    position : fixed;
+#profilePop {
+    position: fixed;
     display: none;
-    top:14vh;
-    left: 25vw;
-    justify-content: center;
-    align-items: center;    
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 50vw;
+    max-width: 600px;
     height: 50vh;
-    border: var(--border) solid 2px;
+    max-height: 400px;
+    border: 2px solid var(--border);
     border-radius: 25px;
-    background-color:#A7A7A7;
-    color: white;   
-    z-index: 20;
+    background-color: #4a4a4a;
+    /* Darker background color */
+    color: #ffffff;
+    /* White font color */
+    z-index: 5;
+    overflow: auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    /* Use a common sans-serif font */
+    font-size: 16px;
+    /* Adjust font size as needed */
+    line-height: 1.5;
+    /* Improve line spacing for readability */
 }
+
 
 .noM {
     margin: 1vh;
 }
 
-#username{
+#username {
     margin: 1vh;
     font-size: 48px;
 }
 
-#email{
+#email {
     font-size: 32px;
 }
 
@@ -346,22 +358,17 @@ a {
     background-size: 70%;
 }
 
-#mew{
+#mew {
     background-image: url('https://product-images.tcgplayer.com/fit-in/437x437/477057.jpg');
 
 }
 
-#char{
+#char {
     background-image: url('https://product-images.tcgplayer.com/fit-in/437x437/452034.jpg');
 
 }
 
-#ray{
+#ray {
     background-image: url('https://product-images.tcgplayer.com/fit-in/437x437/91206.jpg');
 
 }
-
-
-
-
-
