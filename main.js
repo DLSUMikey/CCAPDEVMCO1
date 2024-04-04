@@ -1,20 +1,27 @@
 function goToCalendar() {
-  window.location.href = 'Calendar/Calendar.html';
+  window.location.href = 'Calendar.html';
 }
-
 function goToCharacters() {
   window.location.href = 'Character.html';
 }
-
 function goToGacha() {
   window.location.href = 'gacha.html';
 }
-
 function goToStore() {
   window.location.href = 'Store.html';
 }
 
-async function openModal() {
+function logout() {
+  localStorage.removeItem('currentUserID');
+  window.location.href = 'landingpage.html';
+}
+function closeProfileModal() {
+  document.getElementById('profileModal').style.display = 'none';
+}
+function hideModal() {
+  document.getElementById("form").style.display = "none";
+}
+let fetchUserData = async () => {
   try {
     let userID = localStorage.getItem('currentUserID');
     // Fetch user data from the database
@@ -25,10 +32,10 @@ async function openModal() {
     const userData = await response.json();
 
     // Populate profile information in the modal
-    document.getElementById("username").innerText = userData.userName;
-    document.getElementById("email").innerText = userData.email;
-    document.getElementById("date").innerText = userData.dateCreated;
-    document.getElementById("tasksCompleted").innerText = userData.TotalTasksCompleted;
+    document.getElementById("profileName").innerText = userData.userName;
+    document.getElementById("profileEmail").innerText = userData.email;
+    document.getElementById("profileDateCreated").innerText = userData.dateCreated;
+    document.getElementById("profileTasksCompleted").innerText = userData.TotalTasksCompleted;
     document.getElementById("coins").innerText = userData.credits;
 
     // Display the modal
@@ -36,20 +43,15 @@ async function openModal() {
   } catch (err) {
     console.error("Error fetching user data:", err);
   }
-}
-
-
-function closeModal() {
-  document.getElementById('profileModal').style.display = 'none';
-}
-
-window.onclick = function (event) {
-  let modal = document.getElementById('profileModal');
-  if (event.target == modal) {
-    closeModal();
-  }
 };
 
+function openProfileModal() {
+  // Display the modal
+  document.getElementById('profileModal').style.display = 'block';
+  fetchUserData();
+}
+
+// Task form handling
 let form = document.getElementById("form");
 form.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -64,15 +66,12 @@ let formValidation = () => {
 
   if (textInput.value === "") {
     msg.innerHTML = "Task cannot be blank!";
-  }
-  else if (dateInput.value === "") {
+  } else if (dateInput.value === "") {
     msg.innerHTML = "Due Date cannot be blank!";
-  }
-  else {
+  } else {
     msg.innerHTML = "";
-    let taskID = form.getAttribute("data-task-id");
-    if (taskID) {
-      updateTask(taskID);
+    if (currentTaskID) {
+      updateTask(currentTaskID);
     } else {
       createNewTask();
     }
@@ -92,8 +91,6 @@ let createNewTask = () => {
     taskDateDue: dateInput.value
   };
 
-
-  console.log("Task data sent to backend:", taskData);
   fetch('http://localhost:3000/createTask', {
     method: 'POST',
     headers: {
@@ -103,12 +100,12 @@ let createNewTask = () => {
   })
     .then(response => {
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error('Failed to create task');
       }
-      return response.json(); // Parse the JSON response
+      return response.json();
     })
     .then(data => {
-      alert(data.message); // Display the message from JSON response
+      alert('Task created successfully');
       displayTasks();
       resetForm();
     })
@@ -118,9 +115,7 @@ let createNewTask = () => {
     });
 };
 
-
 let updateTask = (taskID) => {
-  // Add logic to update an existing task
   let textInput = document.getElementById("textInput");
   let dateInput = document.getElementById("dateInput");
   let textArea = document.getElementById("textArea");
@@ -132,56 +127,95 @@ let updateTask = (taskID) => {
   };
 
   fetch(`http://localhost:3000/updateTask/${taskID}`, {
-    method: 'PUT', // Use PUT for update
+    method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(taskData),
   })
-    .then(response => response.text())
-    .then(data => {
-      alert(data);
-      displayTasks();
-      resetForm();
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Failed to update task');
+      }
+      return response.text();
     })
-    .catch((error) => {
+    .then(data => {
+      alert(data); // Display success message
+      displayTasks(); // Refresh task list
+      resetForm(); // Clear form fields
+    })
+    .catch(error => {
       console.error('Error:', error);
       alert('An error occurred while updating the task');
     });
 };
 
+// Delete task
 let deleteTask = (taskID) => {
-  // Send a request to delete the task
   fetch(`http://localhost:3000/deleteTask/${taskID}`, {
     method: 'DELETE',
   })
-    .then(response => response.text())
-    .then(data => {
-      alert(data);
-      displayTasks();
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Failed to delete task');
+      }
+      return response.text();
     })
-    .catch((error) => {
+    .then(data => {
+      alert(data); // Display success message
+      displayTasks(); // Refresh task list
+    })
+    .catch(error => {
       console.error('Error:', error);
       alert('An error occurred while deleting the task');
     });
 };
 
-let editTask = (taskID) => {
-  // Retrieve task data and populate the form for editing
+let currentTaskID = null;
+function showModal() {
+  // Check if the elements exist before accessing their properties
+  const profileNameElement = document.getElementById("profileName");
+  const profileEmailElement = document.getElementById("profileEmail");
+  const profileDateCreatedElement = document.getElementById("profileDateCreated");
+  const profileTasksCompletedElement = document.getElementById("profileTasksCompleted");
+  const coinsElement = document.getElementById("coins");
+
+  // Check if elements are found before accessing properties
+  if (profileNameElement && profileEmailElement && profileDateCreatedElement && profileTasksCompletedElement && coinsElement) {
+    // Set innerText properties
+    profileNameElement.innerText = "Some Name";
+    profileEmailElement.innerText = "email@example.com";
+    profileDateCreatedElement.innerText = "Some Date";
+    profileTasksCompletedElement.innerText = "Some Tasks Completed";
+    coinsElement.innerText = "Some Coins";
+    // Other actions in showModal()
+  } else {
+    console.error("Elements not found");
+  }
+}
+function editTask(taskID) {
   fetch(`http://localhost:3000/getTask/${taskID}`)
-    .then(response => response.json())
-    .then(taskData => {
-      document.getElementById("textInput").value = taskData.taskName;
-      document.getElementById("dateInput").value = taskData.taskDateDue;
-      document.getElementById("textArea").value = taskData.taskDesc;
-      form.setAttribute("data-task-id", taskID);
-      openModal();
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Failed to fetch task data');
+      }
+      return response.json();
     })
-    .catch((error) => {
+    .then(taskData => {
+      const dateDue = new Date(taskData.taskDateDue).toISOString().split('T')[0];
+      // Populate form fields with task data for editing
+      document.getElementById("textInput").value = taskData.taskName;
+      document.getElementById("dateInput").value = dateDue;
+      document.getElementById("textArea").value = taskData.taskDesc;
+      showModal();
+    })
+    .catch(error => {
       console.error('Error:', error);
       alert('An error occurred while fetching task data');
     });
-};
+}
+
+
 
 let resetForm = () => {
   document.getElementById("textInput").value = "";
@@ -190,8 +224,22 @@ let resetForm = () => {
   form.removeAttribute("data-task-id");
 };
 
+document.addEventListener("DOMContentLoaded", function () {
+  const editButtons = document.querySelectorAll(".edit-btn");
 
-let displayTasks = () => {
+  // Attach click event listener to each edit button
+  editButtons.forEach(button => {
+    button.addEventListener("click", function () {
+      // Extract task ID from the button's dataset
+      const taskID = button.dataset.taskId;
+      // Call editTask function with the task ID
+      editTask(taskID);
+    });
+  });
+
+  displayTasks();
+});
+function displayTasks() {
   let userID = localStorage.getItem('currentUserID');
   let tasksContainer = document.getElementById("tasks");
   tasksContainer.innerHTML = ''; // Clear existing tasks
@@ -200,20 +248,41 @@ let displayTasks = () => {
     .then(response => response.json())
     .then(tasks => {
       tasks.forEach(task => {
-        tasksContainer.innerHTML += `
-          <div id="task-${task._id}">
-            <h3>${task.taskName}</h3>
-            <p>${task.taskDesc}</p>
-            <span>Due: ${new Date(task.taskDateDue).toLocaleDateString()}</span>
-            <button onclick="editTask('${task._id}')">Edit</button>
-            <button onclick="deleteTask('${task._id}')">Delete</button>
-          </div>
-        `;
+        const taskElement = document.createElement("div");
+        taskElement.id = `task-${task._id}`;
+
+        const taskNameHeader = document.createElement("h3");
+        taskNameHeader.textContent = task.taskName;
+        taskElement.appendChild(taskNameHeader);
+
+        const taskDescParagraph = document.createElement("p");
+        taskDescParagraph.textContent = task.taskDesc;
+        taskElement.appendChild(taskDescParagraph);
+
+        const taskDueSpan = document.createElement("span");
+        taskDueSpan.textContent = `Due: ${new Date(task.taskDateDue).toLocaleDateString()}`;
+        taskElement.appendChild(taskDueSpan);
+
+        const editButton = document.createElement("button");
+        editButton.textContent = "Edit";
+        editButton.setAttribute("type", "button"); // Ensure it's not a submit button
+        editButton.setAttribute("data-bs-toggle", "modal"); // Add data-toggle attribute
+        editButton.setAttribute("data-bs-target", "#form"); // Add data-target attribute
+        editButton.setAttribute("data-task-id", task._id); // Add data-task-id attribute
+        editButton.classList.add("edit-btn");
+        editButton.addEventListener("click", () => editTask(task._id));
+        taskElement.appendChild(editButton);
+
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "Delete";
+        deleteButton.addEventListener("click", () => deleteTask(task._id));
+        taskElement.appendChild(deleteButton);
+
+        tasksContainer.appendChild(taskElement);
       });
     })
     .catch(error => {
       console.error('Error fetching tasks:', error);
     });
-};
+}
 
-displayTasks();

@@ -134,6 +134,23 @@ app.get('/getTasks', async (req, res) => {
         res.status(500).send('Server error');
     }
 });
+app.get('/getTask/:taskID', async (req, res) => {
+    try {
+        const taskID = req.params.taskID;
+        const task = await Task.findById(taskID);
+
+        if (!task) {
+            return res.status(404).json({ error: 'Task not found' });
+        }
+
+        res.json(task);
+    } catch (err) {
+        console.error("Error fetching task data:", err);
+        res.status(500).json({ error: 'Server error' });
+    }
+});
+
+
 
 app.get('/tasks/getUser/:userID', async (req, res) => {
     try {
@@ -161,7 +178,6 @@ app.get('/getUserData/:userID', async (req, res) => {
         res.status(500).json({ error: 'Server error' });
     }
 });
-
 
 
 

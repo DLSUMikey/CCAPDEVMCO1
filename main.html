@@ -20,9 +20,10 @@
             <button class="store-btn" onclick="goToStore()">Store</button>
         </nav>
         <div class="profile">
-            <button id="profileBtn" class="profile-btn" onclick="openModal()">Profile</button>
+            <button class="profile-btn" onclick="openProfileModal()">Profile</button>
         </div>
     </header>
+
     <!-- <main class="table">
             <section class="table-header">
                 <h1>To-Do's</h1>
@@ -79,16 +80,15 @@
     <div class="app">
         <h4 class="mb-3">Todo List</h4>
         <div id="addNew" data-bs-toggle="modal" data-bs-target="#form">
-            <span class="add_new">Add New Tasks</span>
+            <span class="add_new">
+                <h2>Add Assignments</h2>
+            </span>
             <!-- <i class="fa-solid fa-plus"></i> -->
             <svg class="plus-button" xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
                 <path fill="#ffffff"
                     d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z" />
             </svg>
-        </div>
-        <div class="button_container">
-            <button class="btn">Add Assignment</button>
         </div>
 
 
@@ -148,25 +148,22 @@
         </section>
     </main>
 
-    <div id="profileModalContainer"></div>
+    <!-- Profile button -->
+
     <!-- Profile Modal -->
-    <div id="profileModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <p><strong>Username:</strong> <span id="username"></span></p>
-            <p><strong>Email:</strong> <span id="email"></span></p>
-            <p><strong>Bio:</strong> <span id="bio"></span></p>
-            <p><strong>Date Created:</strong> <span id="date"></span></p>
-            <p><strong>Tasks Completed:</strong> <span id="tasksCompleted"></span></p>
+    <div id="profileModal" class="profile-modal">
+        <div class="profile-modal-content">
+            <span class="profile-modal-close" onclick="closeProfileModal()">&times;</span>
+            <h2>Profile</h2>
+            <p><strong>Name:</strong> <span id="profileName"></span></p>
+            <p><strong>Email:</strong> <span id="profileEmail"></span></p>
+            <p><strong>Date Created:</strong> <span id="profileDateCreated"></span></p>
+            <p><strong>Tasks Completed:</strong> <span id="profileTasksCompleted"></span></p>
             <p><strong>Coins:</strong> <span id="coins"></span></p>
+            <button onclick="logout()" class="btn btn-danger">Logout</button>
         </div>
     </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script defer src="main.js"></script>
-
-
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
