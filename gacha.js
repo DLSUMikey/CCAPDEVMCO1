@@ -50,7 +50,7 @@ function getItemIndex(itemDatas) {
 
 async function readData(userID) {
     try {
-        let rollDataR = await fetch(`https://raipi.onrender.com/userdatas/${userID}`);
+        let rollDataR = await fetch('https://raipi.onrender.com/userdatas/' + userID);
         if (!rollDataR.ok) {
             throw new Error('Failed to fetch user data');
         }
@@ -193,7 +193,7 @@ oneRoll.addEventListener('click', async (e) => {
                     Items.itemIndex.push(collection);
                 }
 
-                fetch(('http://localhost:3000/items/' + Items._id), {
+                fetch(('https://raipi.onrender.com' + Items._id), {
                     method: "PATCH",
                     headers: {
                         'Content-Type': 'application/json'
