@@ -103,7 +103,7 @@ async function roll() {
         star = 1;
     }
 
-    fetch(('http://localhost:3000/userdatas/' + userID), {
+    fetch(('https://raipi.onrender.com/' + userID), {
         method: "PATCH",
         headers: {
             'Content-Type': 'application/json'
