@@ -13,7 +13,7 @@ const readData = async () => {
     let rollDataR = await fetch('http://localhost:3000/userdatas/' + userID)
     let rollData = await rollDataR.json();
     return rollData;
-};
+}
 
 const readItemDatas = async () => {
     let itemDataR = await fetch('http://localhost:3000/items');
@@ -72,7 +72,9 @@ function divMaker(name = String, description = String, image = String, rarity = 
 
     let charImage = document.createElement("div");
     $(charImage).addClass("charImage");
-    $(charImage).css("background-image", ("url(/",image,")"));
+    $(charImage).css("background-image", "url(" + image + ")");
+    $(charImage).css("background-size", "70%");
+    console.log(image + " test")
 
     let charName = document.createElement("div");
     $(charName).addClass("CharName");
@@ -100,11 +102,36 @@ async function loadItems() {
     let i, j, k = 0;
     let itemRaw = await readItemDatas();
     let index = getItemIndex(itemRaw);
+
     if(index != -1){
         let Items = itemRaw[index]
+
+        let sArray = Items.itemRarity
+        let itemIndex = Items.itemIndex
+        let max, temp
+
+        for(let i = 0; i < Items.itemRarity.length; i++) {
+            let max = i;
+            for(let j = i+1; j < Items.itemRarity.length; j++){
+                if(sArray[j] > sArray[max]) {
+                    max=j; 
+                }
+            }
+            if (max != i) {
+                temp = sArray[i]; 
+                sArray[i] = sArray[max];
+                sArray[max] = temp;      
+
+                temp = itemIndex[i]; 
+                itemIndex[i] = itemIndex[max];
+                itemIndex[max] = temp;
+            }
+        }
+        console.log(sArray)
+
         for(i=0; i<Items.itemIndex.length;i++){
-            for(j=0; j<Items.itemCount[i];j++){
-                divMaker(Items.itemName[i], Items.itemDesc[i], Items.itemIMG[i], Items.itemRarity[i], Items.itemPrice[i], i)
+        for(j=0; j<Items.itemCount[itemIndex[i]];j++){
+                divMaker(Items.itemName[itemIndex[i]], Items.itemDesc[itemIndex[i]], Items.itemIMG[itemIndex[i]], sArray[i], Items.itemPrice[itemIndex[i]], itemIndex[i])
                 k++
             }
         }
@@ -120,17 +147,17 @@ $("#charHolder").on('click', ".actionButton", async function() {
     let element = $(this).parent()
     $(element).css("display", "none") //Hide part not needed for store
     
+    let userData = await readData()
     let itemRaw = await readItemDatas();
     let index = getItemIndex(itemRaw);
-    let userData = await readData();
-    
+    let price
     
     let sellIndex = Number($(element).attr('id'))
     console.log(sellIndex)
 
     if(index != -1 && index != null){
         let inventory = itemRaw[index]
-        let price = inventory.itemPrice[sellIndex]
+        price = inventory.itemPrice[sellIndex]
         if (inventory.itemCount[sellIndex]>1){
             inventory.itemCount[sellIndex]--;
         } else {
@@ -196,6 +223,7 @@ async function loadProfile(){
     let userData = await readData()
     $("#profilePop").css("display", "block")
     $("#rewardScreen").css("display", "flex")
+    $("#rewardScreen").css("position", "fixed")
     $("#username").text(userData.userName)
     
     
@@ -206,6 +234,8 @@ async function loadProfile(){
     }
     $("#tasks").text("Tasks completed: " + userData.TotalTasksCompleted)
     $("#totalRolls").text("Total Rolls: " + userData.TotalRolls)
+    $("#5Pity").text("5 star pity: " + userData.fiveStarPity)
+    $("#4Pity").text("4 star pity: " + userData.fourStarPity)
 }
 
 rewardScreen.addEventListener('click', (e) =>{

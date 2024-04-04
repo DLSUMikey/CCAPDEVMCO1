@@ -1,8 +1,12 @@
+import {Banner1, Banner2} from "./Banners.js"
+
 // 5 star system gacha chances make (-1 if not included)
 var fiveSChance = 3;
 var fourSChance = 13;
 var threeSChance = 28;
 var twoSChance = 58;
+
+var Banner = 0;
 
 // HTML elements
 const oneRoll = document.getElementById("oneRollButton");
@@ -104,45 +108,50 @@ async function roll(){
     return star;
 }
 
+async function CreateIMG(obj, i, star){
+    let charIMG = document.createElement("div");
+    $(charIMG).attr('id', 'rewardImage');
+    if(Banner==0){
+        $(charIMG).css('background-image', 'url("' + Banner1.itemIMG[star-1] + '")')
+    } else if(Banner==1){
+        $(charIMG).css('background-image', 'url("' + Banner2[star-1].itemIMG[i] + '")')
+    }
+    $(charIMG).show()
+    $(obj).append(charIMG);
+}
 
 //how many rolls
 oneRoll.addEventListener('click', async (e) =>{
     let userData = await readData()
     
-    let newCharacter = {//Index + quantity is not here
-        itemName: ["catWhite", "catGreen", "catBlue", "catEpic", "catLegend"],
-        itemDesc: ["common cat", "uncommon cat", "rare cat", "epic cat", "chiyo's dad"],
-        itemPrice: [200, 500, 1000, 3000, 10000],
-        itemIMG: ["Chiyo-Chichi.png", "Chiyo-Chichi.png", "Chiyo-Chichi.png", "Chiyo-Chichi.png", "Chiyo-Chichi.png"],
-        itemRarity: [1, 2, 3, 4, 5]
-    }
+    let randChar = Math.floor(Math.random()*3)
 
     if(loggedIN == true && userData != null) {
         if(userData.Rolls > 0) {
             let star = await roll();
-            console.log(star)
             switch (star) {//refactor soonto get Chars from DB
                 case 1:
-                    rewardScreen.style.display = "flex";
                     oneS.style.display = "flex";
+                    CreateIMG(oneS, randChar, star)
                     break;
                 case 2:
-                    rewardScreen.style.display = "flex";
                     twoS.style.display = "flex";
+                    CreateIMG(twoS, randChar, star)
                     break;
                 case 3:
-                    rewardScreen.style.display = "flex";
                     threeS.style.display = "flex";
+                    CreateIMG(threeS, randChar, star)
                     break;
                 case 4:
-                    rewardScreen.style.display = "flex";
                     fourS.style.display = "flex";
+                    CreateIMG(fourS, randChar, star)
                     break;
                 case 5:
-                    rewardScreen.style.display = "flex";
                     fiveS.style.display = "flex";
+                    CreateIMG(fiveS, randChar, star)
                     break;
             }
+            rewardScreen.style.display = "flex";
             //Add Update for Roll + Credit value ammount
 
             let i, found = -1;
@@ -153,20 +162,29 @@ oneRoll.addEventListener('click', async (e) =>{
                 let Items = itemRaw[index]
                 let collection = Items.itemIndex.length
                 for(i=0;i<collection;i++){
-                    if(newCharacter.itemName[star-1] == Items.itemName[i]){
+                    if(Banner1.itemName[star-1] == Items.itemName[i] && Banner == 0 || Banner2[star-1].itemName[randChar] == Items.itemName[i] && Banner == 1){
                         found = i
                     }
                 }
                 if(found != -1){
                     Items.itemCount[found]++
-                } else {
-                    Items.itemName.push(newCharacter.itemName[star-1])
-                    Items.itemDesc.push(newCharacter.itemDesc[star-1])
-                    Items.itemPrice.push(newCharacter.itemPrice[star-1])
+                } else if(Banner == 0) {
+                    Items.itemName.push(Banner1.itemName[star-1])
+                    Items.itemDesc.push(Banner1.itemDesc[star-1])
+                    Items.itemPrice.push(Banner1.itemPrice[star-1])
                     Items.itemCount.push(1)
-                    Items.itemIMG.push(newCharacter.itemIMG[star-1])
-                    Items.itemRarity.push(newCharacter.itemRarity[star-1])
+                    Items.itemIMG.push(Banner1.itemIMG[star-1])
+                    Items.itemRarity.push(Banner1.itemRarity[star-1])
                     Items.itemIndex.push(collection)
+                } else if(Banner == 1) {
+                    Items.itemName.push(Banner2[star-1].itemName[randChar])
+                    Items.itemDesc.push(Banner2[star-1].itemDesc[randChar])
+                    Items.itemPrice.push(Banner2[star-1].itemPrice)
+                    Items.itemCount.push(1)
+                    Items.itemIMG.push(Banner2[star-1].itemIMG[randChar])
+                    Items.itemRarity.push(Banner2[star-1].itemRarity)
+                    Items.itemIndex.push(collection)
+                    console.log(Banner2[star-1].itemRarity)
                 }
 
                 fetch(('http://localhost:3000/items/' + Items._id), {
@@ -199,7 +217,7 @@ oneRoll.addEventListener('mouseover', async (e) =>{
         oneRoll.textContent = "Sign in before rolling"
         console.log("no user")
         profileText.textContent = "Sign in"
-        profileLink = "FindAcc.html"
+        profileLink = "FindAcc.html" //-----------------------------------------------------------------------------Change me to profile page------------------------
         loggedIN = false
     }
     if(userData.Rolls < 1) {
@@ -219,6 +237,7 @@ rewardScreen.addEventListener('click', (e) =>{
     fourS.style.display = "none";
     fiveS.style.display = "none";
     $("#profilePop").css("display", "none")
+    $("#rewardImage").remove()
 
 })
 
@@ -237,6 +256,8 @@ async function loadProfile(){
     }
     $("#tasks").text("Tasks completed: " + userData.TotalTasksCompleted)
     $("#totalRolls").text("Total Rolls: " + userData.TotalRolls)
+    $("#5Pity").text("5 star pity: " + userData.fiveStarPity)
+    $("#4Pity").text("4 star pity: " + userData.fourStarPity)
 }
 
 //copy over
@@ -249,8 +270,29 @@ profile.addEventListener('click', (e) =>{
     
 })
 
+$('#BannerSelect').click(function () {
+    if(Banner == 0){
+        Banner = 1
+        $('#BannerSelect').text("Banner 2")
+        $('#mainDiv').css('background-image', 'url("' + "Cards.jpg" + '")')
+        $('#mainDiv').css('background-size', '95vw')
+        $('#bannerLabel').html("Rayquaza<br>★★★★★")
+        $('#bannerLabel').css('left', '24vw')
+    }else if(Banner == 1){
+        Banner = 0
+        $('#BannerSelect').text("Banner 1")
+        $('#mainDiv').css('background-image', 'url("' + "Banner.png" + '")')
+        $('#mainDiv').css('background-size', 'contain')
+        $('#bannerLabel').html("Kobeni's car<br>★★★★★")
+        $('#bannerLabel').css('left', '30vw')
+    }
+})
+
 //copy over new!
 window.onload = async function() {
+
+    $('#BannerSelect').text("Banner 1")
+    
     userID = localStorage.getItem("currentUserID")
     if (userID != null) {
         let userData = await readData()
@@ -275,5 +317,5 @@ window.onload = async function() {
         profileLink = "FindAcc.html"
         loggedIN = false
     }
-
+    
 };

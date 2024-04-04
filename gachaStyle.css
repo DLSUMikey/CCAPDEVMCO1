@@ -148,11 +148,11 @@ a {
     left:30vw;
     top:55vh;
     font-size: 24px;
+    
 }
 
 .reward {
     margin: 0;
-    display: flex;
     border: 2px #2e4052cc;
     border-radius: 35vh;
     border-style: solid;
@@ -175,6 +175,7 @@ a {
 
 .twoStar {
     background-color: rgb(60, 202, 72);
+    
 }
 
 .threeStar {
@@ -244,7 +245,7 @@ a {
 }
 
 .gachaScreen {
-    display: flex;
+    display: none;
     height: 100%;
     width: 100%;
     justify-content: center;
@@ -253,6 +254,34 @@ a {
     top: 0;
     left: 0;
     background-color: #2e405286;
-    display: none;
     
+}
+
+#BannerSelect{
+    position : absolute;
+    top:14vh;
+    left: 6vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+    width: 120px;
+    height: 50px;
+    border: var(--border) solid 2px;
+    border-radius: 25px;
+    background-color:#412234;
+    color: white;   
+    z-index: 5;
+}
+
+#BannerSelect:hover{
+    background-color: #A7A7A7;
+    transition: 0.3s;
+}
+
+#rewardImage{
+    margin-left: 2vw;
+    margin-top: 5vh;
+    height: 74%;
+    width: 50%;
+    background-repeat: no-repeat;
 }
