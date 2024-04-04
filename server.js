@@ -166,7 +166,7 @@ app.get('/tasks/getUser/:userID', async (req, res) => {
 app.get('/getUserData/:userID', async (req, res) => {
     try {
         const userID = req.params.userID;
-        const userData = await UserData.findById(userID);
+        const userData = await UserData.findById(userID); // Use UserData, not userData
 
         if (!userData) {
             return res.status(404).json({ error: 'User not found' });
@@ -179,7 +179,21 @@ app.get('/getUserData/:userID', async (req, res) => {
     }
 });
 
+app.get('/userdatas/:userID', async (req, res) => {
+    try {
+        const userID = req.params.userID;
+        const userData = await UserData.findById(userID);
 
+        if (!userData) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        res.json(userData);
+    } catch (err) {
+        console.error("Error fetching user data:", err);
+        res.status(500).json({ error: 'Server error' });
+    }
+});
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'landingpage.html'));
