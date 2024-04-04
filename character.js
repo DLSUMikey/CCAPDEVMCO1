@@ -9,7 +9,7 @@ var loggedIN //Copy over//New~!
 
 
 const readData = async () => {
-    let rollDataR = await fetch('userdatas/' + userID)
+    let rollDataR = await fetch('https://raipi.onrender.com/userdatas/' + userID)
     let rollData = await rollDataR.json();
     return rollData;
 }
