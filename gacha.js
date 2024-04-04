@@ -193,7 +193,7 @@ oneRoll.addEventListener('click', async (e) => {
                     Items.itemIndex.push(collection);
                 }
 
-                fetch(('https://raipi.onrender.com' + Items._id), {
+                fetch(('https://raipi.onrender.com/items/' + Items._id), {
                     method: "PATCH",
                     headers: {
                         'Content-Type': 'application/json'
