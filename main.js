@@ -91,7 +91,7 @@ let createNewTask = () => {
     taskDateDue: dateInput.value
   };
 
-  fetch('http://localhost:3000/createTask', {
+  fetch('https://raipi.onrender.com/createTask', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -126,7 +126,7 @@ let updateTask = () => {
     taskDateDue: dateInput.value
   };
 
-  fetch(`http://localhost:3000/updateTask/${currentTaskID}`, {
+  fetch(`https://raipi.onrender.com/updateTask/${currentTaskID}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -152,7 +152,7 @@ let updateTask = () => {
 
 // Delete task
 let deleteTask = (taskID) => {
-  fetch(`http://localhost:3000/deleteTask/${taskID}`, {
+  fetch(`https://raipi.onrender.com/deleteTask/${taskID}`, {
     method: 'DELETE',
   })
     .then(response => {
@@ -194,7 +194,7 @@ function showModal() {
   }
 }
 function editTask(taskID) {
-  fetch(`http://localhost:3000/getTask/${taskID}`)
+  fetch(`https://raipi.onrender.com/getTask/${taskID}`)
     .then(response => {
       if (!response.ok) {
         throw new Error('Failed to fetch task data');
@@ -246,7 +246,7 @@ function displayTasks() {
   let tasksContainer = document.getElementById("tasks");
   tasksContainer.innerHTML = ''; // Clear existing tasks
 
-  fetch(`http://localhost:3000/getTasks?userID=${userID}`)
+  fetch(`https://raipi.onrender.com/getTasks?userID=${userID}`)
     .then(response => response.json())
     .then(tasks => {
       tasks.forEach(task => {
