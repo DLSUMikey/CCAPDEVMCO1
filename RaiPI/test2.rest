@@ -1,0 +1,32 @@
+###
+
+GET http://localhost:3000/items
+
+
+###
+
+
+POST http://localhost:3000/items
+Content-Type: application/json
+
+{
+    "userID": "65f1525b51f08fc49e530f3c"
+}
+
+
+###
+
+PATCH  http://localhost:3000/items/660d1953fde78ab0e66761f0
+Content-Type: application/json
+
+{
+    "itemName": [],
+    "itemDesc": [],
+    "itemPrice": [],
+    "itemCount": [],
+    "itemIMG": [],
+    "itemRarity": [],
+    "itemIndex": []
+}
+
+###
