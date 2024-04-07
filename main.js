@@ -63,17 +63,26 @@ let formValidation = () => {
   let dateInput = document.getElementById("dateInput");
   let textArea = document.getElementById("textArea");
   let msg = document.getElementById("msg");
+  let difficulty = document.getElementById("difficulty");
+
+  // Convert the input and today's date to Date objects for comparison
+  let inputDate = new Date(dateInput.value);
+  let today = new Date();
+  // Reset the time part to ensure only the date is compared
+  today.setHours(0,0,0,0);
 
   if (textInput.value === "") {
     msg.innerHTML = "Task cannot be blank!";
-  } else if (dateInput.value === "") {
-    msg.innerHTML = "Due Date cannot be blank!";
+  } else if (dateInput.value === "" || inputDate < today) { // Added check for date being before today
+    msg.innerHTML = "Due Date cannot be blank or in the past!";
+  } else if (difficulty.value === "Choose a Difficulty") {
+    msg.innerHTML = "You must choose a difficulty!";
   } else {
     msg.innerHTML = "";
     if (currentTaskID) {
-      updateTask(); // Update existing task if currentTaskID exists
+      updateTask(currentTaskID);
     } else {
-      createNewTask(); // Create new task if currentTaskID is null
+      createNewTask();
     }
   }
 };
@@ -83,39 +92,42 @@ let createNewTask = () => {
   let textInput = document.getElementById("textInput");
   let dateInput = document.getElementById("dateInput");
   let textArea = document.getElementById("textArea");
+  let difficulty = document.getElementById("difficulty");
 
   const taskData = {
-    userID: userID,
+    userID,
     taskName: textInput.value,
     taskDesc: textArea.value,
-    taskDateDue: dateInput.value
+    taskDateDue: dateInput.value,
+    taskCreditsReward: difficulty.value,
   };
 
-  fetch('https://raipi.onrender.com/createTask', {
+  fetch('http://localhost:3000/createTask', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(taskData),
   })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Failed to create task');
-      }
-      return response.json();
-    })
-    .then(data => {
-      alert('Task created successfully');
-      displayTasks();
-      resetForm();
-    })
-    .catch(error => {
-      console.error('Error:', error);
-      alert('An error occurred while creating the task');
-    });
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Failed to create task');
+    }
+    return response.json();
+  })
+  .then(data => {
+    alert('Task created successfully');
+    displayTasks();
+    resetForm();
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    alert('An error occurred while creating the task');
+  });
 };
 
-let updateTask = () => {
+
+let updateTask = (taskID) => {
   let textInput = document.getElementById("textInput");
   let dateInput = document.getElementById("dateInput");
   let textArea = document.getElementById("textArea");
@@ -126,7 +138,7 @@ let updateTask = () => {
     taskDateDue: dateInput.value
   };
 
-  fetch(`https://raipi.onrender.com/updateTask/${currentTaskID}`, {
+  fetch(`http://localhost:3000/updateTask/${taskID}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -152,8 +164,8 @@ let updateTask = () => {
 
 // Delete task
 let deleteTask = (taskID) => {
-  fetch(`https://raipi.onrender.com/deleteTask/${taskID}`, {
-    method: 'DELETE',
+  fetch(`http://localhost:3000/deleteTask/${taskID}`, {
+    method: 'PATCH',
   })
     .then(response => {
       if (!response.ok) {
@@ -194,7 +206,7 @@ function showModal() {
   }
 }
 function editTask(taskID) {
-  fetch(`https://raipi.onrender.com/getTask/${taskID}`)
+  fetch(`http://localhost:3000/getTask/${taskID}`)
     .then(response => {
       if (!response.ok) {
         throw new Error('Failed to fetch task data');
@@ -207,8 +219,6 @@ function editTask(taskID) {
       document.getElementById("textInput").value = taskData.taskName;
       document.getElementById("dateInput").value = dateDue;
       document.getElementById("textArea").value = taskData.taskDesc;
-      // Set the currentTaskID to the taskID for updating
-      currentTaskID = taskID;
       showModal();
     })
     .catch(error => {
@@ -241,17 +251,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
   displayTasks();
 });
+
 function displayTasks() {
   let userID = localStorage.getItem('currentUserID');
   let tasksContainer = document.getElementById("tasks");
   tasksContainer.innerHTML = ''; // Clear existing tasks
 
-  fetch(`https://raipi.onrender.com/getTasks?userID=${userID}`)
+  fetch(`http://localhost:3000/getTasks?userID=${userID}`)
     .then(response => response.json())
     .then(tasks => {
       tasks.forEach(task => {
+        // Skip tasks marked as deleted
+        if (task.isTaskDeleted) return;
+
         const taskElement = document.createElement("div");
         taskElement.id = `task-${task._id}`;
+
+
 
         const taskNameHeader = document.createElement("h3");
         taskNameHeader.textContent = task.taskName;
@@ -267,10 +283,10 @@ function displayTasks() {
 
         const editButton = document.createElement("button");
         editButton.textContent = "Edit";
-        editButton.setAttribute("type", "button"); // Ensure it's not a submit button
-        editButton.setAttribute("data-bs-toggle", "modal"); // Add data-toggle attribute
-        editButton.setAttribute("data-bs-target", "#form"); // Add data-target attribute
-        editButton.setAttribute("data-task-id", task._id); // Add data-task-id attribute
+        editButton.setAttribute("type", "button");
+        editButton.setAttribute("data-bs-toggle", "modal");
+        editButton.setAttribute("data-bs-target", "#form");
+        editButton.setAttribute("data-task-id", task._id);
         editButton.classList.add("edit-btn");
         editButton.addEventListener("click", () => editTask(task._id));
         taskElement.appendChild(editButton);
