@@ -23,15 +23,15 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             body: JSON.stringify({
                 email,
-                userName: username,  // Changed to match server.js
-                userPassword: password // Changed to match server.js
+                username: username,
+                password: password
             }),
         })
             .then(response => response.text())
             .then(data => {
                 alert(data);
                 if (data === 'User created successfully') {
-                    window.location.href = 'landingpage.html';
+                    window.location.href = '/';
                 }
             })
             .catch((error) => {
